@@ -33,7 +33,7 @@ To learn more basics,please see https://git-scm.com/documentation
          Step 3: If you go the link given above ,you can see that there is a dropdown named as Branch:master,don't use it. Click on it,select Temporary from the list.
          Step 4: To the top right, you can see a button called Fork.Click on it.It will copy my project to your own repository.Now you have my project(Temporary           version) in your own repository.
          Step 5: go to a directory in your own pc,go to git shell/git bash and write the following commands.
-                     git clone https://github.com/Karyotyper/Project300.git
+                     git clone https://github.com/<username>/Project300.git
          Step 6: Now you have my project in your own pc. 
        **Step 7: Add your codes to the project
        **Step 8: After you have finished adding your own codes the project, write the following commands.
