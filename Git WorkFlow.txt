@@ -71,4 +71,4 @@ To learn more basics,please see https://git-scm.com/documentation
 
 -Hi I am Zinia,let's learn Git
 -Hi,I am Siam, I am learning Git too!!!
-     
+-Hi Everyone :D Glad that you're learning Git!! Cheers!
