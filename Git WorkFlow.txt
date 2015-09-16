@@ -71,5 +71,9 @@ To learn more basics,please see https://git-scm.com/documentation
 
 -Hi I am Zinia,let's learn Git
 -Hi,I am Siam, I am learning Git too!!!
+<<<<<<< HEAD
 -hi, I am zinia, changed in teacher course service.
      
+=======
+-Hi Everyone :D Glad that you're learning Git!! Cheers!
+>>>>>>> 55ae17c59d850a9f1925b319a015fa7f9968544e
