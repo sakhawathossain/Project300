@@ -10,8 +10,9 @@
     <class>com.great.cms.db.entity.CourseRegistration</class>
     <class>com.great.cms.db.entity.Department</class>
     <class>com.great.cms.db.entity.Student</class>
-    <class>com.great.cms.db.entity.Task</class>
-        <class>com.great.cms.db.entity.CourseTask</class>
+    <class>com.great.cms.db.entity.Designation</class>
+        <class>com.great.cms.db.entity.ProjectGroup</class>
+        <class>com.great.cms.db.entity.ProjectGroupSubmit</class>
     
     
     
