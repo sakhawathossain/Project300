@@ -8,7 +8,9 @@ import com.great.cms.db.entity.TaskProject;
 public interface StudentGroupDao extends GenericDao<StudentGroup, Integer> {
   
 
-	List<StudentGroup> findGroupsByTaskID(int taskId);
+	//public List<StudentGroup> findGroupsByTaskID(int taskId);
+	public List<StudentGroup> findStudentByGroupId(int groupId);
+
 
 	//void findGroupsByTaskID(int i);
 
