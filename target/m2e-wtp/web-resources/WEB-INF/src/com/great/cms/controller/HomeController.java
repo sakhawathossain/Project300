@@ -37,7 +37,7 @@ public class HomeController {
 	public String showProjectGroup(){
 		System.out.println("Project Group  Page Mapping");
 		//return "project-groups";
-		return "submission";
+		return "project-groups";
 	}
 	
 }
