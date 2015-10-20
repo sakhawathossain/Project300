@@ -1,4 +1,4 @@
-var submissionURL = "testservlet/submissions";
+var submissionURL = "ajaxsubmissions";
 var submissionID;
 var action = 'edit';
 

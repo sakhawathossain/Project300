@@ -46,12 +46,13 @@ public class TaskController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method=RequestMethod.GET,value="/ajaxtasks")
 	public @ResponseBody String getTaskList(Model model){
+		System.out.println("get task list method");
 		//List<Task>tasks = taskService.getTaskList(); REVERT POINT
 		List<Task> tasks = taskService.getTaskListByCourseId(2); //2 By default..
 		model.addAttribute("tasks",tasks);
 		jsonArray = new JSONArray();
 		if(tasks==null)
-		System.out.println("LIST IS NULL");
+		System.out.println("TaskController : LIST IS NULL");
 	
 	    
 	    for(Task t: tasks)

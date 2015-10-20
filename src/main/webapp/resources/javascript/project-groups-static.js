@@ -1,5 +1,5 @@
-var projectURL = "testservlet/projects";
-var groupURL = "testservlet/groups";
+var projectURL = "ajaxprojects";
+var groupURL = "ajaxgroups";
 var projectID;
 var groupID;
 var memberCounter;
