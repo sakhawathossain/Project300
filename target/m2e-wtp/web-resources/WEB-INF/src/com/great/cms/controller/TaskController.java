@@ -46,7 +46,7 @@ public class TaskController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method=RequestMethod.GET,value="/ajaxtasks")
 	public @ResponseBody String getTaskList(Model model){
-		
+		System.out.println("get task list method");
 		//List<Task>tasks = taskService.getTaskList(); REVERT POINT
 		List<Task> tasks = taskService.getTaskListByCourseId(2); //2 By default..
 		model.addAttribute("tasks",tasks);
