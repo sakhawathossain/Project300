@@ -32,7 +32,7 @@ public class ProjectGroupSubmitServiceImpl implements ProjectGroupSubmitService,
 	
 	
 	@Override
-	public List<Submission> findSubmissionByProjectGroupId(int projectGroupId) {
+	public List<Submission> findSubmissionListByProjectGroupId(int projectGroupId) {
 		
 		System.out.println("findSubmissionByProjectGroupId Called, id = " + projectGroupId);
 		List<ProjectGroupSubmit> list = null;

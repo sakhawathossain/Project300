@@ -25,6 +25,7 @@ public class CourseController {
 
 	@RequestMapping("/course")
 	public String getCourse(Model model) {
+		System.out.println("Course Controller");
 		List<Course> courses = courseService.getCourseList();//courseRepository.findAll();		
 		model.addAttribute("courses", courses);
 	

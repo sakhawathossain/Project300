@@ -16,7 +16,8 @@
 	<br></br>
 <a href="<c:url value="/student"/>"> Student List Page</a>
     <br></br>
-<a href="<c:url value="/tasks"/>">Task List Page</a>
-
+<a href="<c:url value="/"/>">Task List Page</a>
+    <br></br>
+<a href="<c:url value="/submission"/>">Submission Page</a>
 
 </html>
