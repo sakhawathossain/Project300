@@ -22,6 +22,14 @@ public class SubmissionServiceImpl implements SubmissionService,Serializable{
 		
 		submissionDao.update(submission);
 	}
+	
+	@Override
+	public void saveSubmission(Submission submission) {
+		
+		submissionDao.save(submission);
+	}
+	
+	
 
 
 	@Override

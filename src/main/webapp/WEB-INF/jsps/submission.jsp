@@ -70,6 +70,9 @@
                             Comment
                         </th>
                         <th class="col-md-2 col-sm-2 col-xs-2">
+                            Download link
+                        </th>
+                        <th class="col-md-2 col-sm-2 col-xs-2">
                             Actions
                         </th>
                     </tr>
@@ -99,8 +102,8 @@
                             <div class="col-md-4"><label>Comment</label></div>
                             <div class="col-md-8"><p id="view_submission_comment"></p></div></div>
                         <div class="row">
-                            <div class="col-md-4"><label>Download Link</label></div>
-                            <div class="col-md-8"><a id="view_submission_download">url</a></div></div>
+                            <div class="col-md-4"><label></label></div>
+                            <div class="col-md-8"><a id="view_submission_download">download source</a></div></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -129,7 +132,8 @@
                             </div>
                             <div class="row bottom-buffer">
                                 <div class="col-md-4"><label>File</label></div>
-                                <div class="col-md-8"><input type="file" accept=".zip" name="submissionFile" id="edit_submission_file"></input></div>
+
+                                <div class="col-md-8"><input type="file" accept=".zip" name="submissionFileTest" id="edit_submission_file"></input></div>
                             </div>
                         </div>
                         <div class="modal-footer">

@@ -1,7 +1,9 @@
 package com.great.cms.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 
@@ -29,11 +31,11 @@ public class HomeController {
 
 	@RequestMapping("/submission")
 	public String showSubmission(){
-		System.out.println("Submission Page Mapping");
+		//System.out.println("Submission Page Mapping");
 		return "submission";
 	}
 	
-	@RequestMapping("/projectgroups")
+	@RequestMapping(value="/projectgroups")
 	public String showProjectGroup(){
 		System.out.println("Project Group  Page Mapping");
 		//return "project-groups";

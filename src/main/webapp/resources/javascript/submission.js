@@ -1,5 +1,8 @@
 var submissionURL = "ajaxsubmissions";
 var submissionID;
+var addSubmissionURL = "addsubmission";
+var editSubmissionURL = "editsubmission"
+var tempURL;
 var action = 'edit';
 var addSubmissionURL = "addsubmission";
 var editSubmissionURL = "editsubmission";
@@ -26,7 +29,8 @@ $(document).ready(function() {
             },  {
                 //"sWidth": "20%",
                 "mData": 3,
-                "visible": false
+                "visible" : false
+                
             },
             {
                 "mData": null,
@@ -52,7 +56,7 @@ $(document).ready(function() {
         $('#view_submission_id').html(submissionTable.cell(this, 0).data());
         $('#view_submission_date').html(submissionTable.cell(this, 1).data());
         $("#view_submission_comment").html(submissionTable.cell(this, 2).data());
-        $("#view_submission_download").attr("href", "#");
+        $("#view_submission_download").attr("href", "downloadfile?filename="+submissionTable.cell(this, 3).data());
         $('#modalSubmissionInfo').modal('show');
      });
     
@@ -65,17 +69,20 @@ $(document).ready(function() {
 
     //show Submission Add modal on button click
     $('#button_add_submission').on('click', function(event) {
-        submissionURL = addSubmissionURL;
+
+        tempURL = addSubmissionURL;
         $('#modal_label').html("Add Submission");
         $('#edit_submission_date').val("");
         $("#edit_submission_comment").val("");
+        $('#edit_submission_date').val("06/01/2015 12:00:00");
         $('#modalSubmissionEdit').modal('show');
     });
 
     //show Submission Edit modal on button click
     $('#submissionTable tbody').on('click', 'td a.editbutton', function(e) {
         e.stopImmediatePropagation(); // stop the row selection when clicking on an icon
-        submissionURL = editSubmissionURL;
+
+        tempURL = editSubmissionURL;
         var rowIndex = submissionTable.cell($(this).parent()).index().row;
         submissionID = submissionTable.cell(rowIndex, 0).data();
         $('#modal_label').html("Edit Submission");
@@ -93,16 +100,41 @@ $(document).ready(function() {
         $('#modalSubmissionDelete').modal('show');
     });
 
+    
+    $('#edit_submission').submit(function(event){
+    	saveMedia();
+    	event.preventDefault();
+    });
     //Submit Submission Edit form
+    
+    /*
     $('#edit_submission').submit(function(event) {
-    //	alert("Edit Submission Portion");
+
+    	//var formData = new FormData($('form')[0]);
+    	//var formData = new FormData($('#edit_submission'));
+    	 
+//    	var request = new FormData();                   
+//    	$.each(context.prototype.fileData, function(i, obj) { request.append(i, obj.value.files[0]); });    
+//    	request.append('action', 'upload');
+//    	request.append('id', response.obj.id);
+    	
+    	//var formData = new FormData($('#edit_submission')[0]);
+    	alert('hitting URL: '+tempURL);
+
         $.ajax({
+        	
             type: 'post', // define the type of HTTP verb we want to use (POST for our form)
-            url: submissionURL, // the url where we want to POST
+
+            url: tempURL, // the url where we want to POST            
             data: $('#edit_submission').serialize(), // our data object
-            dataType: 'json', // what type of data do we expect back from the server
-            encode: true,
-            enctype: 'multipart/form'
+            //data = formData,		// CAUTION: this line breaks the javascript
+            //dataType: 'multipart/form-data', // what type of data do we expect back from the server
+            //dataType: 'json'
+            enctype: 'multipart/form-data',
+            //processType=false,	// CAUTION: this line breaks the javascript
+            //contentType: false,	// CAUTION:this line breaks the javascript
+            //processData = false,	// CAUTION: this line breaks the javascript
+            cache : false,
             success: function(data) {
                 $('#modalSubmissionEdit').modal('hide');
                 submissionTable.ajax.reload();
@@ -110,6 +142,7 @@ $(document).ready(function() {
         }),
         event.preventDefault();
     });
+    */
 
     //Submit Submission Delete form
     $('#buttonSubmissionDelete').on('click', function(event) {
@@ -124,4 +157,32 @@ $(document).ready(function() {
         }),
         event.preventDefault();
     });
+    
+    
 });
+    
+    function saveMedia() {
+    	var form = document.getElementById('edit_submission');
+    	var formData = new FormData(form);
+        //var formData = new FormData();
+        formData.append('file', $('input[type=file]')[0].files[0]);
+        //formData.append('commentTeacher', $('#commentTeacher')[0].files[0]);
+        console.log("form data " + formData);
+        $.ajax({
+            url : 'addsubmission',
+            data : formData,  
+            //dataType: json,
+            processData : false,
+            contentType : false,
+            type : 'POST',
+            success : function(data) {
+            	$('#modalSubmissionEdit').modal('hide');
+                submissionTable.ajax.reload();
+            },
+            error : function(err) {
+                alert("failed to upload data");
+            }
+        });
+    }
+
+

@@ -87,7 +87,9 @@ $(document)
 
 					// go to project-groups.html on row click
 					$('#taskTable tbody').on('click', 'tr', function() {
-						window.location.href = "project-groups.html";
+						var redirect = "projectgroups";
+						var redirectWithParam = "projectgroups?task_id=" +taskTable.cell(rowIndex, 0).data() + "";
+						window.location.href = redirect;
 					});
 
 					// show Task Add modal on button click
