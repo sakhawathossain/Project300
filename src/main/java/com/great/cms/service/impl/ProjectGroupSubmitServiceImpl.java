@@ -41,6 +41,7 @@ public class ProjectGroupSubmitServiceImpl implements ProjectGroupSubmitService,
 		Submission sub;
 		try{
 			list = projGroupSubDao.getSubmissionByProjectGroup(projectGroupId);
+			System.out.println("proj grp submit srvc. list size = " + list.size());
 			for(ProjectGroupSubmit pGS : list){
 				submissionList.add(pGS.getSubmissionId());
 				System.out.println("Submission id = " + pGS.getSubmissionId().getSubmissionId()

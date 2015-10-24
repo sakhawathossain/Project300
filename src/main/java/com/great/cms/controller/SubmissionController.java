@@ -35,7 +35,8 @@ public class SubmissionController {
 		System.out.println("Submission Controller -> getSubmissionList");
 		List<Submission> submissionList = null;
 		
-		submissionList =  projGrpSubService.findSubmissionListByProjectGroupId(1);
+		submissionList =  projGrpSubService.findSubmissionListByProjectGroupId(2);
+		System.out.println("sub list = " + submissionList);
 		
 		model.addAttribute("submissions",submissionList);
 		
