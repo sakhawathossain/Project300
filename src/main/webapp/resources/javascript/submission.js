@@ -1,6 +1,9 @@
 var submissionURL = "ajaxsubmissions";
 var submissionID;
 var action = 'edit';
+var addSubmissionURL = "addsubmission";
+var editSubmissionURL = "editsubmission";
+var deleteSubmissionURL = "deletesubmission";
 
 $(document).ready(function() {
     var submissionTable;
@@ -62,7 +65,7 @@ $(document).ready(function() {
 
     //show Submission Add modal on button click
     $('#button_add_submission').on('click', function(event) {
-        action = 'add';
+        submissionURL = addSubmissionURL;
         $('#modal_label').html("Add Submission");
         $('#edit_submission_date').val("");
         $("#edit_submission_comment").val("");
@@ -72,7 +75,7 @@ $(document).ready(function() {
     //show Submission Edit modal on button click
     $('#submissionTable tbody').on('click', 'td a.editbutton', function(e) {
         e.stopImmediatePropagation(); // stop the row selection when clicking on an icon
-        action = 'edit';
+        submissionURL = editSubmissionURL;
         var rowIndex = submissionTable.cell($(this).parent()).index().row;
         submissionID = submissionTable.cell(rowIndex, 0).data();
         $('#modal_label').html("Edit Submission");
@@ -92,9 +95,10 @@ $(document).ready(function() {
 
     //Submit Submission Edit form
     $('#edit_submission').submit(function(event) {
+    //	alert("Edit Submission Portion");
         $.ajax({
             type: 'post', // define the type of HTTP verb we want to use (POST for our form)
-            url: submissionURL + '?action=' + action + '&', // the url where we want to POST
+            url: submissionURL, // the url where we want to POST
             data: $('#edit_submission').serialize(), // our data object
             //dataType: 'json', // what type of data do we expect back from the server
             encode: true,
@@ -110,7 +114,7 @@ $(document).ready(function() {
     $('#buttonSubmissionDelete').on('click', function(event) {
         $.ajax({
             type: 'post', // define the type of HTTP verb we want to use (POST for our form)
-            url: submissionURL + "?action=delete&id=" + submissionID, // the url where we want to POST
+            url: deleteSubmissionURL + "?id=" + submissionID, // the url where we want to POST
             encode: true,
             success: function(data) {
                 $('#modalSubmissionDelete').modal('hide');

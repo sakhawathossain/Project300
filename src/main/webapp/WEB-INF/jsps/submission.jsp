@@ -121,11 +121,11 @@
 
                             <div class="row bottom-buffer">
                                 <div class="col-md-4"><label>Date</label></div>
-                                <div class="col-md-8"><input name="edit_submission_date" id="edit_submission_date" type="date" class="form-control"></input></div>
+                                <div class="col-md-8"><input name="submissionTime" id="edit_submission_date" type="date" class="form-control"></input></div>
                             </div>
                             <div class="row bottom-buffer">
                                 <div class="col-md-4"><label>Comment</label></div>
-                                <div class="col-md-8"><textarea name="edit_submission_comment" id="edit_submission_comment" type="text" class="form-control"></textarea></div>
+                                <div class="col-md-8"><textarea name="commentTeacher" id="edit_submission_comment" type="text" class="form-control"></textarea></div>
                             </div>
                             <div class="row bottom-buffer">
                                 <div class="col-md-4"><label>File</label></div>

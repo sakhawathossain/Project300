@@ -7,8 +7,10 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -51,13 +53,14 @@ public class SubmissionController {
 	    	JSONArray jsonObj = new JSONArray();
 	    	jsonObj.add(s.getSubmissionId().toString());
 	    	jsonObj.add(s.getSubmissionTime());
+	    	jsonObj.add(s.getCommentTeacher());
+	    	jsonObj.add("Dummy Url");
 	    	
 	    	/*if( s.getTaskTypeId().getTaskTypeId()==1)
 	    	jsonObj.add("Project");
 	    	else
 		    jsonObj.add("Assignment");*/
 	    	
-	    	jsonObj.add(s.getCommentTeacher());
 	    	System.out.println("sub id : " + s.getSubmissionId());
 	    	
 	    	jsonArray.add(jsonObj);  
@@ -79,4 +82,13 @@ public class SubmissionController {
 		return submissionJson;
 	
 }
+	
+	@RequestMapping(value="/addsubmission",method=RequestMethod.POST)
+    public @ResponseBody String addSubmission(Submission submission)
+    {
+		System.out.println("addsubmission method, submission teacher comment : " + submission.getCommentTeacher());
+		projGrpSubService.addProjectGroupSubmit(submission, 1);
+		return "{ \"success\" : true }";
+    }
+	
 }
