@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.great.cms.db.entity.Submission;
 import com.great.cms.db.entity.Task;
@@ -84,10 +85,19 @@ public class SubmissionController {
 }
 	
 	@RequestMapping(value="/addsubmission",method=RequestMethod.POST)
-    public @ResponseBody String addSubmission(Submission submission)
+    public @ResponseBody String addSubmission(Submission submission,@RequestParam("submissionFile")MultipartFile file)
     {
-		System.out.println("addsubmission method, submission teacher comment : " + submission.getCommentTeacher());
-		projGrpSubService.addProjectGroupSubmit(submission, 1);
+		
+		if(!file.isEmpty()){
+			System.out.println("file found");
+		}
+		else
+		{
+			System.out.println("fuck off!");
+		}
+		//System.out.println("addsubmission method, submission teacher comment : " + submission.getCommentTeacher());
+		//projGrpSubService.addProjectGroupSubmit(submission, 1);
+		
 		return "{ \"success\" : true }";
     }
 	

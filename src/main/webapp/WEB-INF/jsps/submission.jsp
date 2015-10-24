@@ -112,7 +112,7 @@
         <div class="modal fade" id="modalSubmissionEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="edit_submission" name="edit_submission" method="post">
+                    <form id="edit_submission" name="edit_submission" method="post" enctype="multipart/form-data">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="modal_label">Edit Submission</h4>
@@ -129,7 +129,7 @@
                             </div>
                             <div class="row bottom-buffer">
                                 <div class="col-md-4"><label>File</label></div>
-                                <div class="col-md-8"><input type="file" accept=".zip" name="edit_submission_file" id="edit_submission_file"></input></div>
+                                <div class="col-md-8"><input type="file" accept=".zip" name="submissionFile" id="edit_submission_file"></input></div>
                             </div>
                         </div>
                         <div class="modal-footer">

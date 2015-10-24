@@ -23,6 +23,9 @@
     </context:component-scan>
     
 	<mvc:annotation-driven></mvc:annotation-driven>
+	
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
 	<bean id="jspViewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

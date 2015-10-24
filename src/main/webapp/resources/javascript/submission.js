@@ -100,8 +100,9 @@ $(document).ready(function() {
             type: 'post', // define the type of HTTP verb we want to use (POST for our form)
             url: submissionURL, // the url where we want to POST
             data: $('#edit_submission').serialize(), // our data object
-            //dataType: 'json', // what type of data do we expect back from the server
+            dataType: 'json', // what type of data do we expect back from the server
             encode: true,
+            enctype: 'multipart/form'
             success: function(data) {
                 $('#modalSubmissionEdit').modal('hide');
                 submissionTable.ajax.reload();
