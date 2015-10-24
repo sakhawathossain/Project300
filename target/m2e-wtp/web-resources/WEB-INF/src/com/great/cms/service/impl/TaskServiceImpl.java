@@ -39,19 +39,29 @@ public class TaskServiceImpl implements TaskService,Serializable {
 
 	@Override	
 	public void saveTask(Task task,int courseId,int session) {
+		System.out.println("\nTaskServiceImpl.java: tryina add a new task homie\n");
+		
+		
+//		CourseTask courseTask = new CourseTask();
+//		courseTask.setTaskId(task);
+//		courseTask.setCourseId(this.courseDao.findById(courseId));
+//		courseTask.setExamCommitteeId(this.examCommitteeDao
+//				.findBySession(session));
+//		task.setCourseTask(courseTask);
 		this.taskDao.save(task);
 		CourseTask courseTask = new CourseTask();
 		courseTask.setTaskId(task);
 		courseTask.setCourseId(this.courseDao.findById(courseId));
 		courseTask.setExamCommitteeId(this.examCommitteeDao
 				.findBySession(session));
-		this.courseTaskDao.update(courseTask);
+		
+		this.courseTaskDao.save(courseTask);
 	}
 
 	@Override
 	public void updateTask(Task task) {
 		
-		
+		System.out.println("TaskServiceImpl.java: tryina edit this task with id "+task.getTaskId());
 		this.taskDao.update(task);
 		
 		
