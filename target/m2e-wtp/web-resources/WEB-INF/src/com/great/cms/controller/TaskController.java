@@ -32,102 +32,98 @@ import com.great.cms.service.TaskTypeService;
 @Controller
 @SessionAttributes("organization")
 public class TaskController {
-	
+
 	@Autowired
 	private TaskService taskService;
 	@Autowired
 	private TaskTypeService taskTypeService;
 	@Autowired
 	private CourseTaskService courseTaskService;
-	
 
-	
 	JSONArray jsonArray;
+
 	@SuppressWarnings("unchecked")
-	@RequestMapping(method=RequestMethod.GET,value="/ajaxtasks")
-	public @ResponseBody String getTaskList(Model model){
+	@RequestMapping(method = RequestMethod.GET, value = "/ajaxtasks")
+	public @ResponseBody
+	String getTaskList(Model model) {
 		System.out.println("get task list method");
-		//List<Task>tasks = taskService.getTaskList(); REVERT POINT
-		List<Task> tasks = taskService.getTaskListByCourseId(2); //2 By default..
-		model.addAttribute("tasks",tasks);
+		// List<Task>tasks = taskService.getTaskList(); REVERT POINT
+		List<Task> tasks = taskService.getTaskListByCourseId(2); // 2 By
+																	// default..
+		model.addAttribute("tasks", tasks);
 		jsonArray = new JSONArray();
-		if(tasks==null)
-		System.out.println("TaskController : LIST IS NULL");
-	
-	    
-	    for(Task t: tasks)
-	    {
-	    	JSONArray jObj = new JSONArray();
-	    	jObj.add(t.getTaskId().toString());
-	    	jObj.add(t.getTaskTitle());
-	    	/*if( t.getTaskTypeId().getTaskTypeId()==1)
-	    	jObj.add("Project");
-	    	else
-		    jObj.add("Assignment");*/
-	    	jObj.add(t.getTaskTypeId().getTaskTypeId());
-	    	jObj.add(t.getTaskDesc());
-	    	jObj.add(t.getTaskDeadline().toString());
-	    	jObj.add(String.valueOf(t.getIsOpen()));
-	    	jObj.add(String.valueOf(t.getTaskTotalGroupNo()));
-	    	jObj.add(String.valueOf(t.getTaskTotalSubmissonNo()));
-	    	
-	    	jsonArray.add(jObj);  	
-	    	
+		if (tasks == null)
+			System.out.println("TaskController : LIST IS NULL");
 
-	    }
-	    JSONObject parameters = new JSONObject();
+		for (Task t : tasks) {
+			JSONArray jObj = new JSONArray();
+			jObj.add(t.getTaskId().toString());
+			jObj.add(t.getTaskTitle());
+			/*
+			 * if( t.getTaskTypeId().getTaskTypeId()==1) jObj.add("Project");
+			 * else jObj.add("Assignment");
+			 */
+			jObj.add(t.getTaskTypeId().getTaskTypeId());
+			jObj.add(t.getTaskDesc());
+			jObj.add(t.getTaskDeadline().toString());
+			jObj.add(String.valueOf(t.getIsOpen()));
+			jObj.add(String.valueOf(t.getTaskTotalGroupNo()));
+			jObj.add(String.valueOf(t.getTaskTotalSubmissonNo()));
 
-    	parameters.put("draw", 1);
+			jsonArray.add(jObj);
 
-    	parameters.put("recordsTotal", 1 );
-    	
-    	parameters.put("recordsFiltered", 1 );
-    	
-    	parameters.put("data", jsonArray);
-    	
-    	String taskJson = parameters.toJSONString();
-    	
-    	//System.out.print("DLSJDHSLKJDH:  "+taskJson);
+		}
+		JSONObject parameters = new JSONObject();
+
+		parameters.put("draw", 1);
+
+		parameters.put("recordsTotal", 1);
+
+		parameters.put("recordsFiltered", 1);
+
+		parameters.put("data", jsonArray);
+
+		String taskJson = parameters.toJSONString();
+
+		// System.out.print("DLSJDHSLKJDH:  "+taskJson);
 		return taskJson;
 
-		
-	}
-	
-	
-
-	
-	@RequestMapping(value="/edittask",method=RequestMethod.POST)
-	public @ResponseBody String updateTask(Task task, BindingResult result, @RequestParam("taskTypeId") int taskType, @RequestParam("taskId")int taskId)
-	{
-   	    System.out.println("MOST TROUBLED: "+taskId);
-   	    TaskType tt = new TaskType();
-  	    tt.setTaskTypeId(taskType);
-  	    task.setTaskId(taskId);
-  	  	task.setTaskTypeId(tt);
-  	  	
-  	  	taskService.updateTask(task);
-		return "{ \"success\" : true }";
-		
 	}
 
-	
-	@RequestMapping(value="/addtask",method=RequestMethod.POST)
-    public @ResponseBody String addTask(Task task,BindingResult result,@RequestParam("taskTypeId") int taskType)
-	{
+	@RequestMapping(value = "/edittask", method = RequestMethod.POST)
+	public @ResponseBody
+	String updateTask(Task task, BindingResult result,
+			@RequestParam("taskTypeId") int taskType,
+			@RequestParam("taskId") int taskId) {
 		TaskType tt = new TaskType();
-    	 tt.setTaskTypeId(taskType);
-   	 task.setTaskTypeId(tt);
-   	  taskService.saveTask(task,2,2011);
-		 return "{ \"success\" : true }";
-		
+		tt.setTaskTypeId(taskType);
+		task.setTaskId(taskId);
+		task.setTaskTypeId(tt);
+
+		taskService.updateTask(task);
+		return "{ \"success\" : true }";
+
 	}
-	
-	@RequestMapping(value="/deletetask",method=RequestMethod.POST)
-	public @ResponseBody String deletetask(@RequestParam("taskId")int id )
-	{
-	
-        taskService.deleteTaskById(id);
+
+	@RequestMapping(value = "/addtask", method = RequestMethod.POST)
+	public @ResponseBody
+	String addTask(Task task, BindingResult result,
+			@RequestParam("taskTypeId") int taskType) {
+		System.out.println("TaskController.java: Calling the addTask() method");
+		TaskType tt = new TaskType();
+		tt.setTaskTypeId(taskType);
+		task.setTaskTypeId(tt);
+		taskService.saveTask(task, 2, 2011);
+		return "{ \"success\" : true }";
+
+	}
+
+	@RequestMapping(value = "/deletetask", method = RequestMethod.POST)
+	public @ResponseBody
+	String deletetask(@RequestParam("taskId") int id) {
+
+		taskService.deleteTaskById(id);
 		return "{ \"success\" : true }";
 	}
-	
+
 }
