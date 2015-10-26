@@ -68,18 +68,9 @@ public class ProjectGroupSubmitServiceImpl implements ProjectGroupSubmitService,
 		
 		
 		submissionDao.save(submission);
-		System.out.println("The MAGIC: "+submission.getSubmissionId());
 		
-		s = submissionDao.findByVersionAndTime(submission.getSubmissionVer(),submission.getSubmissionTime());
-		
-		if(s == null){
-			System.out.println("Submission adding failed!");
-			return;
-		}
-		
-		System.out.println("new submission id = " + s.getSubmissionId());
 		pgs.setProjectGroupId(projectGroupDao.findById(projectGroupID));
-		pgs.setSubmissionId(s);
+		pgs.setSubmissionId(submission);
 		
 		projGroupSubDao.save(pgs);
 		
