@@ -8,5 +8,7 @@ public interface SubmissionService {
 	
 	public void saveSubmission(Submission submission);
 	
+	public void deleteSubmission(int submissionId);
+	
 
 }
