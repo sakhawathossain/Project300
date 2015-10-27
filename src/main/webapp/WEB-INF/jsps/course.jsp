@@ -2,6 +2,7 @@
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,23 +16,13 @@
 	rel="stylesheet" type="text/css" />
 <link href="<c:url value="/resources/css/bootstrap-theme.min.css" />"
 	rel="stylesheet" type="text/css" />
-<link href="<c:url value="/resources/css/jquery.dataTables.min.css" />"
-	rel="stylesheet" type="text/css" />
-<link href="<c:url value="/resources/css/dataTables.bootstrap.css" />"
-	rel="stylesheet" type="text/css" />
-<link href="<c:url value="/resources/css/thesis-list.css"/>"
-	rel="stylesheet" type="text/css" />
+<!-- <link href="<c:url value="/resources/css/thesis-list.css"/>"
+	rel="stylesheet" type="text/css" />  -->
 
 <script
 	src="<c:url value="/resources/javascript/jquery-1.11.3.min.js" />"
 	type="text/javascript"></script>
 <script src="<c:url value="/resources/javascript/bootstrap.min.js" />"
-	type="text/javascript"></script>
-<script
-	src="<c:url value="/resources/javascript/jquery.dataTables.min.js" />"
-	type="text/javascript"></script>
-<script
-	src="<c:url value="/resources/javascript/dataTables.bootstrap.js" />"
 	type="text/javascript"></script>
 <script src="<c:url value="/resources/javascript/course.js" />"
 	type="text/javascript"></script>
@@ -62,9 +53,8 @@
 </nav>
 <div class="container">
 	
-
-	<div class="panel">
-		<table id="courseTable class="table table-striped table-bordered table-hover">
+	<div>
+		<table id="course_table class="table table-striped table-bordered table-hover">
 			<thead>
 				<tr>
 					<th>Course ID</th>

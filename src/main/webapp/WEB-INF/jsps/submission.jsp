@@ -70,6 +70,9 @@
                             Comment
                         </th>
                         <th class="col-md-2 col-sm-2 col-xs-2">
+                            Download link
+                        </th>
+                        <th class="col-md-2 col-sm-2 col-xs-2">
                             Actions
                         </th>
                     </tr>
@@ -99,8 +102,8 @@
                             <div class="col-md-4"><label>Comment</label></div>
                             <div class="col-md-8"><p id="view_submission_comment"></p></div></div>
                         <div class="row">
-                            <div class="col-md-4"><label>Download Link</label></div>
-                            <div class="col-md-8"><a id="view_submission_download">url</a></div></div>
+                            <div class="col-md-4"><label></label></div>
+                            <div class="col-md-8"><a id="view_submission_download">download source</a></div></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -112,7 +115,7 @@
         <div class="modal fade" id="modalSubmissionEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="edit_submission" name="edit_submission" method="post">
+                    <form id="edit_submission" name="edit_submission" method="post" enctype="multipart/form-data">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="modal_label">Edit Submission</h4>
@@ -121,15 +124,15 @@
 
                             <div class="row bottom-buffer">
                                 <div class="col-md-4"><label>Date</label></div>
-                                <div class="col-md-8"><input name="edit_submission_date" id="edit_submission_date" type="date" class="form-control"></input></div>
+                                <div class="col-md-8"><input name="submissionTime" id="edit_submission_date" type="date" class="form-control"></input></div>
                             </div>
                             <div class="row bottom-buffer">
                                 <div class="col-md-4"><label>Comment</label></div>
-                                <div class="col-md-8"><textarea name="edit_submission_comment" id="edit_submission_comment" type="text" class="form-control"></textarea></div>
+                                <div class="col-md-8"><textarea name="commentTeacher" id="edit_submission_comment" type="text" class="form-control"></textarea></div>
                             </div>
                             <div class="row bottom-buffer">
                                 <div class="col-md-4"><label>File</label></div>
-                                <div class="col-md-8"><input type="file" accept=".zip" name="edit_submission_file" id="edit_submission_file"></input></div>
+                                <div class="col-md-8"><input type="file" accept=".zip" name="submissionFileTest" id="edit_submission_file"></input></div>
                             </div>
                         </div>
                         <div class="modal-footer">
