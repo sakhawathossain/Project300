@@ -28,6 +28,12 @@ public class SubmissionServiceImpl implements SubmissionService,Serializable{
 		
 		submissionDao.save(submission);
 	}
+
+	@Override
+	public void deleteSubmission(int submissionId) {
+		submissionDao.delete(submissionDao.findById(submissionId));
+		
+	}
 	
 
 }
