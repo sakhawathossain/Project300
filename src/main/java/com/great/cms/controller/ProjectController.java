@@ -25,12 +25,13 @@ public class ProjectController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method=RequestMethod.GET,value="/ajaxprojects")
-	public @ResponseBody String getProjectList(Model model)
+	public @ResponseBody String getProjectList(Model model,@RequestParam("task_id") int taskId)
 	{
 		System.out.println("Project Controller -> getProjectList");
+		System.out.println("Task Id: "+taskId);
 		List<Project> projectList = null;
 		
-		projectList =  taskProjectService.findProjectsByTaskID(1);
+		projectList =  taskProjectService.findProjectsByTaskID(taskId);
 		
 		System.out.println("Project Controller -> getProjectList " + projectList);
 		

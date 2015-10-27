@@ -168,9 +168,9 @@ public class SubmissionController {
 //		    }
 		    
 		    //Saving the Submission Entity//
-		   // submissionService.saveSubmission(submission);
+		   submissionService.saveSubmission(submission,2,multipartFile);
 		   
-		projGrpSubService.addProjectGroupSubmit(submission, 2, multipartFile);
+		//projGrpSubService.addProjectGroupSubmit(submission, 2, multipartFile);
 	    return "Uploaded: " + multipartFile.getSize() + " bytes";
 	}
 	

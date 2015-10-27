@@ -238,7 +238,7 @@
                     <form id="edit_project" name="edit_project" method="post">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Edit Project</h4>
+                            <h4 class="modal-title" id="modal_project_label">Edit Project</h4>
                         </div>
                         <div class="modal-body">
 
@@ -268,7 +268,7 @@
                     <form id="edit_group" name="edit_group" method="post">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Edit Group</h4>
+                            <h4 class="modal-title" id="modal_group_label">Edit Group</h4>
                         </div>
                         <div id="div_edit_group_fields" class="modal-body">
 
