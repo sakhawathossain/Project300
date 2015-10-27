@@ -29,14 +29,5 @@ public class SubmissionServiceImpl implements SubmissionService,Serializable{
 		submissionDao.save(submission);
 	}
 	
-	
-
-
-	@Override
-	public void saveSubmission(Submission submission) {
-		// TODO Auto-generated method stub
-		submissionDao.save(submission);
-		
-	}
 
 }
