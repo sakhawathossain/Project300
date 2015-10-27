@@ -47,9 +47,9 @@ public class TaskController {
 	public @ResponseBody
 	String getTaskList(Model model) {
 		System.out.println("get task list method");
-		// List<Task>tasks = taskService.getTaskList(); REVERT POINT
-		List<Task> tasks = taskService.getTaskListByCourseId(2); // 2 By
-																	// default..
+		
+		// TODO: static list of tasks displayed for course_id 1, change to dynamic
+		List<Task> tasks = taskService.getTaskListByCourseId(1);
 		model.addAttribute("tasks", tasks);
 		jsonArray = new JSONArray();
 		if (tasks == null)
@@ -123,6 +123,7 @@ public class TaskController {
 	String deletetask(@RequestParam("taskId") int id) {
 
 		taskService.deleteTaskById(id);
+		
 		return "{ \"success\" : true }";
 	}
 

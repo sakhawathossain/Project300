@@ -45,10 +45,14 @@ $(document).ready(function() {
                 }
             }],
         ajax: {
-            url: projectURL,
+        	
+            url: projectURL+"?task_id="+getUrlVars()["task_id"],
             dataType: 'json'
         }
+       
     });
+    
+    
 
     groupTable = $('#groupTable').DataTable({
         "dom": 'lrtip',
@@ -118,6 +122,7 @@ $(document).ready(function() {
     
   //show Project Add modal on button click
     $('#button_add_project').on('click', function(event) {
+    	$('#modal_project_label').html("Add Project");
         tempProjectURL = addProjectURL;
         $('#edit_project_title').val("");
         $('#edit_project_submission_date').val("");
@@ -126,6 +131,7 @@ $(document).ready(function() {
     
     //show Project Edit modal on button click
     $('#projectTable tbody').on('click', 'td a.editbutton', function(e) {
+    	$('#modal_project_label').html("Edit Project");
         //e.stopImmediatePropagation(); // stop the row selection when clicking on an icon
     	tempProjectURL = updateProjectURL;
         var rowIndex = projectTable.cell($(this).parent()).index().row;
@@ -256,3 +262,18 @@ $(document).ready(function() {
 
 
 });
+
+//Getting parameters from url
+function getUrlVars()
+{
+	
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
