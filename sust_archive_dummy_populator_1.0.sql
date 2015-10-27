@@ -215,14 +215,14 @@ INSERT INTO task_project VALUES(5, 2, 5);
 INSERT INTO task_project VALUES(6, 2, 6);
 
 
-INSERT INTO submission VALUES(1, "No comments", 1, "No comments", "2015-03-17 15-25-00");
-INSERT INTO submission VALUES(2, "No comments", 1, "No comments", "2015-03-18 12-00-00");
-INSERT INTO submission VALUES(3, "No comments", 1, "No comments", "2015-03-18 12-00-00");
-INSERT INTO submission VALUES(4, "No comments", 1, "No comments", "2015-04-10 19-20-00");
-INSERT INTO submission VALUES(5, "No comments", 1, "No comments", "2015-04-10 19-25-00");
-INSERT INTO submission VALUES(6, "No comments", 1, "No comments", "2015-04-10 19-27-00");
-INSERT INTO submission VALUES(7, "No comments", 1, "No comments", "2015-05-05 11-50-00");
-INSERT INTO submission VALUES(8, "No comments", 1, "No comments", "2015-05-08 20-15-00");
+INSERT INTO submission VALUES(1, "No comments", 1, "No comments", "2015-03-17 15-25-00","dummy url 1");
+INSERT INTO submission VALUES(2, "No comments", 1, "No comments", "2015-03-18 12-00-00","dummy url 2");
+INSERT INTO submission VALUES(3, "No comments", 1, "No comments", "2015-03-18 12-00-00","dummy url 3");
+INSERT INTO submission VALUES(4, "No comments", 1, "No comments", "2015-04-10 19-20-00","dummy url 4");
+INSERT INTO submission VALUES(5, "No comments", 1, "No comments", "2015-04-10 19-25-00","dummy url 5");
+INSERT INTO submission VALUES(6, "No comments", 1, "No comments", "2015-04-10 19-27-00","dummy url 6");
+INSERT INTO submission VALUES(7, "No comments", 1, "No comments", "2015-05-05 11-50-00","dummy url 7");
+INSERT INTO submission VALUES(8, "No comments", 1, "No comments", "2015-05-08 20-15-00","dummy url 8");
 
 
 INSERT INTO project_group_submit VALUES(1, 1, 2);
