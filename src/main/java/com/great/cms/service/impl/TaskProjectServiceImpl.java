@@ -63,7 +63,7 @@ public class TaskProjectServiceImpl implements TaskProjectService,Serializable{
 
 
 	@Override
-	public void updateProjectOfTask(Project project, int taskId) {
+	public void updateProject(Project project) {
 		projectDao.update(project);
 		
 	}

@@ -6,6 +6,7 @@ var deleteProjectURL = "deleteproject";
 var addGroupURL = "addgroup";
 var updateGroupURL = "updategroup";
 var deleteGroupURL = "deletegroup";
+var tempProjectURL
 var projectID;
 var groupID;
 var memberCounter;
@@ -26,18 +27,15 @@ $(document).ready(function() {
         },
         "aoColumns": [{
                 "mData": 0,
-                //"visible": false
-            }, {
-                "sWidth": "20%",
-                "mData": 1
-            }, {
-                //"sWidth": "20%",
-                "mData": 2,
                 "visible": false
             }, {
-                //"sWidth": "20%",
-                "mData": 3
-            },
+                "sWidth": "40%",
+                "mData": 1
+            }, {
+                "sWidth": "40%",
+                "mData": 2
+                //"visible": false
+            }, 
             {
                 "mData": null,
                 "bSortable": false,
@@ -117,16 +115,24 @@ $(document).ready(function() {
         groupTable.ajax.url(groupURL).load();
     });
 
-
+    
+  //show Project Add modal on button click
+    $('#button_add_project').on('click', function(event) {
+        tempProjectURL = addProjectURL;
+        $('#edit_project_title').val("");
+        $('#edit_project_submission_date').val("");
+        $('#modalProjectEdit').modal('show');
+    });
+    
     //show Project Edit modal on button click
     $('#projectTable tbody').on('click', 'td a.editbutton', function(e) {
         //e.stopImmediatePropagation(); // stop the row selection when clicking on an icon
+    	tempProjectURL = updateProjectURL;
         var rowIndex = projectTable.cell($(this).parent()).index().row;
         projectID = projectTable.cell(rowIndex, 0).data();
         //alert('clicked button for id: ' + id);
         $('#edit_project_title').val(projectTable.cell(rowIndex, 1).data());
-        $('#edit_project_submission_date').val(projectTable.cell(rowIndex, 2).data());
-        $('#edit_project_members').val(projectTable.cell(rowIndex, 3).data());
+        $('#edit_project_desc').val(projectTable.cell(rowIndex, 2).data());
         $('#modalProjectEdit').modal('show');
     });
 
@@ -172,7 +178,7 @@ $(document).ready(function() {
     $('#edit_project').submit(function(event) {
         $.ajax({
             type: 'post', // define the type of HTTP verb we want to use (POST for our form)
-            url: projectURL + "?action=edit&", // the url where we want to POST
+            url: tempProjectURL, // the url where we want to POST
             data: $('#edit_project').serialize(), // our data object
             //dataType: 'json', // what type of data do we expect back from the server
             encode: true,

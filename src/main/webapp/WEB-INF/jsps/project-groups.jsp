@@ -87,9 +87,9 @@
         </div>
         <div class="panel col-lg-6 col-sm-6">
             <div class="rowAddButton">
-                <button class="btn btn-success col-xs-4 col-xs-offset-8">
+                <button id="button_add_project" class="btn btn-success col-xs-4 col-xs-offset-8">
                     <i class="glyphicon glyphicon-plus-sign"></i>
-                    Add Projects
+                    Add Project
                 </button>
             </div>
             <table id="projectTable" class="table table-striped table-bordered table-hover">
@@ -108,12 +108,7 @@
                         <th class="	col-md-3
                             col-sm-3
                             col-xs-3">
-                            Submission Date
-                        </th>
-                        <th class="	col-md-2
-                            col-sm-2
-                            col-xs-2">
-                            Members
+                            Description
                         </th>
                         <th class="	col-md-2
                             col-sm-2
@@ -130,9 +125,6 @@
                         </td>
                         <td>
                             20-05-15
-                        </td>
-                        <td>
-                            6
                         </td>
                         <td>
                             <span class="btn-group pull-right">
@@ -232,10 +224,6 @@
                         <div class="row">
                             <div class="col-md-4"><label>Submission Date</label></div>
                             <div class="col-md-8"><p id="view_submission_date"></p></div></div>
-                        <div class="row">
-                            <div class="col-md-4"><label>Members</label></div>
-                            <div class="col-md-8"><p id="view_members"></p></div>
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -256,15 +244,11 @@
 
                             <div class="row bottom-buffer">
                                 <div class="col-md-4"><label>Title</label></div>
-                                <div class="col-md-8"><input name="edit_project_title" id="edit_project_title" type="text" class="form-control"></input></div>
+                                <div class="col-md-8"><input name="projectTitle" id="edit_project_title" type="text" class="form-control"></input></div>
                             </div>
                             <div class="row bottom-buffer">
-                                <div class="col-md-4"><label>Submission Date</label></div>
-                                <div class="col-md-8"><input name="edit_project_submission_date" id="edit_project_submission_date" type="text" class="form-control"></input></div>
-                            </div>
-                            <div class="row bottom-buffer">
-                                <div class="col-md-4"><label>Members</label></div>
-                                <div class="col-md-8"><input name="edit_project_members" id="edit_project_members" type="text" class="form-control"></input></div>
+                                <div class="col-md-4"><label>Description</label></div>
+                                <div class="col-md-8"><input name="projectDesc" id="edit_project_desc" type="text" class="form-control"></input></div>
                             </div>
 
                         </div>
