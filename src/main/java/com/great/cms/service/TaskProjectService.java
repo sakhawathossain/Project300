@@ -9,7 +9,7 @@ import com.great.cms.db.entity.Task;
 public interface TaskProjectService {
 	public List<Project> findProjectsByTaskID(int taskId);
 	public void addProjectOfTask(Project project, int taskId);
-	public void updateProjectOfTask(Project project, int taskId);
+	public void updateProject(Project project);
 	public void deleteProjectOfTask(int projectId);
 	
 		

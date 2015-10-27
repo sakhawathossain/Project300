@@ -20,7 +20,7 @@ import com.great.cms.service.TaskProjectService;
 public class ProjectController {
 	
 	@Autowired
-	private TaskProjectService taskProjectService; 
+	private TaskProjectService taskProjectService;
 	private JSONArray jsonArray;
 
 	@SuppressWarnings("unchecked")
@@ -80,18 +80,19 @@ public class ProjectController {
 	
 }
 	@RequestMapping(value="/addproject",method=RequestMethod.POST)
-    public @ResponseBody String addSubmission(Project project,int taskId)
+    public @ResponseBody String addSubmission(Project project)
     {
 		System.out.println("Project Controller -> addproject");
+		// TODO: to which task are we adding this project!? Current function param is static
 		taskProjectService.addProjectOfTask(project, 1);
 		return "{ \"success\" : true }";
     }
 	
 	@RequestMapping(value="/updateproject",method=RequestMethod.POST)
-    public @ResponseBody String updateProject(Project project,int taskId)
+    public @ResponseBody String updateProject(Project project)
     {
 		System.out.println("Project Controller -> updateProject");
-		taskProjectService.updateProjectOfTask(project, taskId);
+		taskProjectService.updateProject(project);
 		return "{ \"success\" : true }";
     }
 	
