@@ -135,7 +135,7 @@ public class SubmissionController {
 	public @ResponseBody String doUpload(Submission submission, 
 			@RequestParam("file") MultipartFile multipartFile
 			) throws FileNotFoundException { 
-		    System.out.println("We're in a new method.\nfilename: "
+		    System.out.println("We're in addSubmission/doUpload method.\nfilename: "
 			+multipartFile.getOriginalFilename()
 			+"\nComment: "+submission.getCommentTeacher());
 		    
@@ -195,6 +195,7 @@ public class SubmissionController {
 			
 			//Read from the file and write into the response
 			ServletOutputStream os = response.getOutputStream();
+			
 			
 			byte[] buffer = new byte[1024];
 			int len;
