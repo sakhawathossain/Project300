@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.great.cms.db.dao.ProjectDao;
+import com.great.cms.db.dao.TaskDao;
 import com.great.cms.db.dao.TaskProjectDao;
 import com.great.cms.db.entity.Project;
 import com.great.cms.db.entity.Task;
@@ -18,6 +20,10 @@ public class TaskProjectServiceImpl implements TaskProjectService,Serializable{
 
 	@Autowired
 	private TaskProjectDao taskProjectDao;
+	@Autowired
+	private ProjectDao projectDao;
+	@Autowired
+	private TaskDao taskDao;
 	
 	
 	@Override
@@ -42,6 +48,31 @@ public class TaskProjectServiceImpl implements TaskProjectService,Serializable{
 			return null;
 		}
 		return projectList;
+	}
+
+
+	@Override
+	public void addProjectOfTask(Project project, int taskId) {
+		
+		projectDao.save(project);
+		TaskProject taskProject = new TaskProject();
+		taskProject.setProjectId(project);
+		taskProject.setTaskId(taskDao.findById(taskId));
+		taskProjectDao.save(taskProject);
+	}
+
+
+	@Override
+	public void updateProjectOfTask(Project project, int taskId) {
+		projectDao.update(project);
+		
+	}
+
+
+	@Override
+	public void deleteProjectOfTask(int projectId) {
+		projectDao.delete(projectDao.findById(projectId));
+		
 	}
 
 }
