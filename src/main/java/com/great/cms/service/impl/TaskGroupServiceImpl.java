@@ -73,6 +73,35 @@ public class TaskGroupServiceImpl implements TaskGroupService,Serializable{
 		
 		
 	}
+
+
+	@Override
+	public void editGroupofTask(int groupId, List<Student> studentList) {
+		Groups grps = groupsDao.findById(groupId);
+		List<StudentGroup> stdgrpList= studentGroupDao.findStudentByGroupId(groupId);
+		for(StudentGroup sg:stdgrpList )
+		{
+			studentGroupDao.delete(sg);
+		}
+		for(Student s: studentList)
+		{
+			StudentGroup studentGroup =new StudentGroup();
+			studentGroup.setGroupId(grps);
+			studentGroup.setStudentId(s);
+			studentGroupDao.save(studentGroup);
+			
+			
+		}
+		
+		
+	}
+
+
+	@Override
+	public void deleteGroupTask(int groupId) {
+		groupsDao.deleteById(groupId);
+		
+	}
 	
 
 }

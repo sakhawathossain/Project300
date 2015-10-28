@@ -81,7 +81,7 @@ public class ProjectController {
 	
 }
 	@RequestMapping(value="/addproject",method=RequestMethod.POST)
-    public @ResponseBody String addSubmission(Project project)
+    public @ResponseBody String addProject(Project project,int taskId)
     {
 		System.out.println("Project Controller -> addproject");
 		// TODO: to which task are we adding this project!? Current function param is static
@@ -98,7 +98,7 @@ public class ProjectController {
     }
 	
 	@RequestMapping(value = "/deleteproject", method = RequestMethod.POST)
-	public @ResponseBody String deletetask(@RequestParam("projectId") int projectId) {
+	public @ResponseBody String deleteProject(@RequestParam("projectId") int projectId) {
 
 		taskProjectService.deleteProjectOfTask(projectId);
 		return "{ \"success\" : true }";
