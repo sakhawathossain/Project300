@@ -22,7 +22,7 @@ public class TaskDaoImpl extends GenericDaoImpl<Task, Integer> implements TaskDa
 
 	@Override
 	public List<Task> getTaskListByCourseId(int courseId) {
-		System.out.println("TaskDaoImpl : COURSE ID IS: "+courseId);
+		//System.out.println("TaskDaoImpl : COURSE ID IS: "+courseId);
 		// TODO Auto-generated method stub
 		List<Task> list = null;
 		//public ConfUser getConfUserByAccctMsisdn(long acctMsisdn){

@@ -38,7 +38,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/projectgroups")
-	public String showProjectGroup(Model model,@RequestParam("task_id")int taskId){
+	public String showProjectGroup(@RequestParam("task_id")int taskId){
 		System.out.println("Project Group  Page Mapping");
 		//model.addAttribute("task_id", taskId);
 		//return "project-groups";

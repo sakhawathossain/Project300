@@ -7,81 +7,104 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.google.gson.Gson;
+import com.great.cms.bean.GroupBean;
 import com.great.cms.db.entity.Groups;
-import com.great.cms.db.entity.Project;
 import com.great.cms.db.entity.Student;
-import com.great.cms.db.entity.StudentGroup;
 import com.great.cms.db.entity.Task;
+import com.great.cms.service.ProjectGroupService;
 import com.great.cms.service.TaskGroupService;
 
 @Controller
 public class GroupController {
-	
+
 	@Autowired
-	private TaskGroupService taskgroupservice;
+	private ProjectGroupService projectGroupService;
+	
 	private JSONArray jsonArray;
-	
+
 	@SuppressWarnings("unchecked")
-	@RequestMapping(method=RequestMethod.GET,value="/ajaxgroups")
-	public @ResponseBody String getGroupList(Model model,@RequestParam("task_id") int taskId)
-	{
-		System.out.println("Group Controller -> getGroupList");
-		System.out.println("Task Id: "+taskId);
-		List<Groups> groupList = null;
+	@RequestMapping(method = RequestMethod.GET, value = "/ajaxgroups")
+	public @ResponseBody
+	String getGroupListbyProjectId(@RequestParam("project_id") int projectID) {
+
+		System.out
+				.println("GroupController  -> getGroupListbyProjectId");
+
+		//List<Groups> groupList = null;
+		List<GroupBean> groupList = null;
 		
-		groupList = taskgroupservice.findGroupsByTaskID(2); 
-		
-		System.out.println("Group Controller -> groupList " + groupList);
-		
-		//model.addAttribute("submissions",submissionList);
-		
+		groupList = projectGroupService.findGroupsByProjectId(projectID);
+
+		System.out.println("GroupController  -> groupList " + groupList);
+
+		// model.addAttribute("submissions",submissionList);
+
 		jsonArray = new JSONArray();
+
+		if (groupList == null)
+			System.out
+					.println("GroupController  -> getGroupListbyProjectId : LIST IS NULL");
+		if (groupList.size() == 0)
+			System.out
+					.println("GroupController  -> getGroupListbyProjectId : LIST IS EMPTY");
+
+		/*for (GroupBean grp : groupList) {
+			JSONArray jsonObj = new JSONArray();
+//			jsonObj.add(grp.getGroupId().toString());
+//			JSONArray memberArray = new JSONArray();
+//				memberArray.add("2011331004");
+//				memberArray.add("2011331035");
+//				memberArray.add("2011331069");
+//			jsonObj.add(memberArray);
+//			jsonObj.add("0");
+//			jsonObj.add("empty");
+
+			jsonArray.add(jsonObj);
+		}*/
 		
-		if(groupList==null)
-		 System.out.println(" Group Controller -> getGroupList : LIST IS NULL");
-		if(groupList.size() == 0)
-			 System.out.println("Group Controller -> getGroupList : LIST IS EMPTY");
-	
-	    
-	    for(Groups grp: groupList)
-	    {
-	    	JSONArray jsonObj = new JSONArray();
-	    	jsonObj.add(grp.getGroupId().toString());
-	    	jsonObj.add(grp.getGroupName());
-	    	jsonObj.add(grp.getProjectGroupList().toString());
-	    	jsonObj.add(grp.getStudentGroupList().toString());
-	    		    	
-	    	jsonArray.add(jsonObj);  
-	}
-	    
-	    JSONObject parameters = new JSONObject();
+		for(GroupBean grp : groupList){
+			JSONArray jsonObj = new JSONArray();
+			jsonObj.add(grp.getGroupId());
+			jsonObj.add(grp.getGroupName());
+				JSONArray memberArray = new JSONArray();
+				for(String member : grp.getMemberList())
+					memberArray.add(member);
+			jsonObj.add(memberArray);
+			
+			jsonArray.add(jsonObj);
+		}
 
-    	parameters.put("draw", 1);
+		JSONObject parameters = new JSONObject();
 
-    	parameters.put("recordsTotal", 1 );
-    	
-    	parameters.put("recordsFiltered", 1 );
-    	
-    	parameters.put("data", jsonArray);
-    	
-    	String groupJson = parameters.toJSONString();
-    	
-    	//System.out.print("DLSJDHSLKJDH:  "+taskJson);
+		parameters.put("draw", 1);
+
+		parameters.put("recordsTotal", 1);
+
+		parameters.put("recordsFiltered", 1);
+
+		parameters.put("data", jsonArray);
+
+		String groupJson = parameters.toJSONString();
+
+		System.out.print("Json Data:  " + groupJson);
 		return groupJson;
-	
-}
+
+	}
 	
 	@RequestMapping(value="/addgroup",method=RequestMethod.POST)
-    public @ResponseBody String addGroup(String groupName,Task taskId ,List<Student> studentList )
+    public @ResponseBody String addGroup(int projectId ,String groupName,List<Student> studentList,int taskId )
     {
-		System.out.println("Group Controller -> addgroup");
+		System.out.println("ProjectGroupController  -> addgroup");
 		
-		taskgroupservice.addNewGroupOfTask(taskId, groupName, studentList);
+		projectGroupService.addGroupOfProject(projectId, groupName, studentList, taskId);
 		
 		return "{ \"success\" : true }";
     }
@@ -89,23 +112,22 @@ public class GroupController {
 	@RequestMapping(value="/editgroup",method=RequestMethod.POST)
     public @ResponseBody String editGroup(int groupId ,List<Student> studentList )
     {
-		System.out.println("Group Controller -> editgroup");
+		System.out.println("ProjectGroupController  -> editgroup");
 		
-		taskgroupservice.editGroupofTask(groupId, studentList);
+		projectGroupService.editGroupOfProject(groupId, studentList);
 		
 		return "{ \"success\" : true }";
     }
 	
 	@RequestMapping(value="/deletegroup",method=RequestMethod.POST)
-    public @ResponseBody String editGroup(int groupId  )
+    public @ResponseBody String deleteGroup(int groupId  )
     {
-		System.out.println("Group Controller -> deletegroup");
+		System.out.println("ProjectGroupController  -> deletegroup");
 		
-		taskgroupservice.deleteGroupTask(groupId);;
+		projectGroupService.deleteGroupOfProject(groupId);
 		
 		return "{ \"success\" : true }";
     }
 	
 
 }
-

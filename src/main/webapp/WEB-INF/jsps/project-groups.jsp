@@ -12,7 +12,7 @@
         <link href="<c:url value="/resources/css/bootstrap-theme.min.css" />" rel="stylesheet" type="text/css" />       
         <link href="<c:url value="/resources/css/jquery.dataTables.min.css" />" rel="stylesheet" type="text/css" />
         <link href="<c:url value="/resources/css/dataTables.bootstrap.css" />" rel="stylesheet" type="text/css" />
-        <link href="<c:url value="/resources/css/thesis-list.css"/>" rel="stylesheet"  type="text/css" />
+        <link href="<c:url value="/resources/css/project-groups.css"/>" rel="stylesheet"  type="text/css" />
 
         <script src="<c:url value="/resources/javascript/jquery-1.11.3.min.js" />" type="text/javascript"></script>
         <script src="<c:url value="/resources/javascript/bootstrap.min.js" />" type="text/javascript"></script>
@@ -118,6 +118,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- 
                     <tr>
                         <th scope="row">01</th>
                         <td>
@@ -137,6 +138,7 @@
                             </span>
                         </td>
                     </tr>
+                     -->
                 </tbody>
             </table>
         </div><!-- panel 1-->
@@ -158,17 +160,12 @@
                         <th class="	col-md-2
                             col-sm-4
                             col-xs-4">
-                            Members
-                        </th>
-                        <th class="	col-md-3
-                            col-sm-3
-                            col-xs-3">
-                            Submissions
+                            Name
                         </th>
                         <th class="	col-md-2
-                            col-sm-2
-                            col-xs-2">
-                            Null
+                            col-sm-4
+                            col-xs-4">
+                            Members
                         </th>
                         <th class="	col-md-2
                             col-sm-2
@@ -178,6 +175,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                <!-- 
                     <tr>
                         <th scope="row">01</th>
                         <td>
@@ -191,6 +189,9 @@
                             6
                         </td>
                         <td>
+                            null
+                        </td>
+                        <td>
                             <span class="btn-group pull-right">
                                 <a class="btn btn-info btn-sm" data-task="edit" data-primary="2345328" href="javascript:;" title="Edit">
                                     <i class="glyphicon glyphicon-edit "></i>
@@ -201,6 +202,7 @@
                             </span>
                         </td>
                     </tr>
+                     -->
                 </tbody>
             </table>
         </div><!--panel 2-->

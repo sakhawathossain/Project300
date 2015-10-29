@@ -1,5 +1,5 @@
 var projectURL = "ajaxprojects";
-var groupURL = "ajaxgroups";
+var groupURL = "ajaxgroups?project_id=0";
 var addProjectURL = "addproject";
 var updateProjectURL = "updateproject";
 var deleteProjectURL = "deleteproject";
@@ -53,7 +53,6 @@ $(document).ready(function() {
     });
     
     
-
     groupTable = $('#groupTable').DataTable({
         "dom": 'lrtip',
         "processing": true,
@@ -63,8 +62,11 @@ $(document).ready(function() {
         "aoColumns": [{
                 "mData": 0,
             }, {
-                //"sWidth": "20%",
                 "mData": 1,
+                "visible": false
+            }, {
+                //"sWidth": "20%",
+                "mData": 2,
                 "bSortable": false,
                 "mRender": function(data, type, full) {
                     var render = "";
@@ -77,11 +79,6 @@ $(document).ready(function() {
                     return render;
                 }
             }, {
-                "mData": 2
-            }, {
-                "mData": 3,
-                "visible": false
-            }, {
                 "mData": null,
                 "bSortable": false,
                 "mRender": function(data, type, full) {
@@ -91,11 +88,12 @@ $(document).ready(function() {
                             + '<a class="btn btn-danger btn-sm removebutton"><i class="glyphicon glyphicon-remove "></i></a>';
                 }
             }],
+            
         //ajax data loads when projectTable clicks row, first row is clicked automatically on init
-        //ajax: {
-        //    url: groupURL,
-        //    dataType: 'json'
-        //}
+        ajax: {
+            url: groupURL,
+            dataType: 'json'
+        }
     });
 
     //show Info Modal
@@ -115,7 +113,8 @@ $(document).ready(function() {
         projectID = projectTable.cell(this, 0).data();
         projectTable.$('tr.selected').removeClass('selected');
         $(this).addClass('selected');
-        groupURL = "testservlet/groups" + "?projectID=" + projectID;
+        groupURL = "ajaxgroups" + "?project_id=" + projectID;
+        //groupURL = "ajaxgroups"
         groupTable.ajax.url(groupURL).load();
     });
 
