@@ -28,7 +28,7 @@
             <div class="
                  col-sm-4 col-sm-offset-1
                  col-xs-12">
-                <a class="navbar-brand" href="project-groups.html">SUST Archives<sup>beta</sup></a>
+                <a class="navbar-brand" href="/greatweb">SUST Archives<sup>beta</sup></a>
             </div>
             <div class="
                  col-sm-5 col-sm-offset-1
@@ -45,7 +45,7 @@
     <div class="container">
         <div class="row searchbar">
             <div class="col-xs-10">
-                <p class="table-headertext">Course: <span id="course_id">None</span></p>
+                <p class="table-headertext">Course: <span id="course_code">${course_code}</span></p>
             </div>
             <div class="col-xs-2">
                 <button id="button_add_task" class="btn btn-success col-xs-12">
@@ -55,7 +55,7 @@
             </div>
         </div>
         <div class="clearfix"></div>
-
+<!-- TABLE -->
         <div class="panel">
 
             <table id="taskTable" class="table table-striped table-bordered table-hover">
