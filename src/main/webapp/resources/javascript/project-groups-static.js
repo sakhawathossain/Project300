@@ -1,5 +1,12 @@
-var projectURL = "testservlet/projects";
-var groupURL = "testservlet/groups";
+var projectURL = "ajaxprojects";
+var groupURL = "ajaxgroups?project_id=0";
+var addProjectURL = "addproject";
+var updateProjectURL = "updateproject";
+var deleteProjectURL = "deleteproject";
+var addGroupURL = "addgroup";
+var updateGroupURL = "updategroup";
+var deleteGroupURL = "deletegroup";
+var tempProjectURL
 var projectID;
 var groupID;
 var memberCounter;
@@ -20,18 +27,15 @@ $(document).ready(function() {
         },
         "aoColumns": [{
                 "mData": 0,
-                //"visible": false
-            }, {
-                "sWidth": "20%",
-                "mData": 1
-            }, {
-                //"sWidth": "20%",
-                "mData": 2,
                 "visible": false
             }, {
-                //"sWidth": "20%",
-                "mData": 3
-            },
+                "sWidth": "40%",
+                "mData": 1
+            }, {
+                "sWidth": "40%",
+                "mData": 2
+                //"visible": false
+            }, 
             {
                 "mData": null,
                 "bSortable": false,
@@ -41,11 +45,14 @@ $(document).ready(function() {
                 }
             }],
         ajax: {
-            url: projectURL,
+        	
+            url: projectURL+"?task_id="+getUrlVars()["task_id"],
             dataType: 'json'
         }
+       
     });
-
+    
+    
     groupTable = $('#groupTable').DataTable({
         "dom": 'lrtip',
         "processing": true,
@@ -55,8 +62,11 @@ $(document).ready(function() {
         "aoColumns": [{
                 "mData": 0,
             }, {
-                //"sWidth": "20%",
                 "mData": 1,
+                "visible": false
+            }, {
+                //"sWidth": "20%",
+                "mData": 2,
                 "bSortable": false,
                 "mRender": function(data, type, full) {
                     var render = "";
@@ -69,11 +79,6 @@ $(document).ready(function() {
                     return render;
                 }
             }, {
-                "mData": 2
-            }, {
-                "mData": 3,
-                "visible": false
-            }, {
                 "mData": null,
                 "bSortable": false,
                 "mRender": function(data, type, full) {
@@ -83,11 +88,12 @@ $(document).ready(function() {
                             + '<a class="btn btn-danger btn-sm removebutton"><i class="glyphicon glyphicon-remove "></i></a>';
                 }
             }],
+            
         //ajax data loads when projectTable clicks row, first row is clicked automatically on init
-        //ajax: {
-        //    url: groupURL,
-        //    dataType: 'json'
-        //}
+        ajax: {
+            url: groupURL,
+            dataType: 'json'
+        }
     });
 
     //show Info Modal
@@ -107,20 +113,38 @@ $(document).ready(function() {
         projectID = projectTable.cell(this, 0).data();
         projectTable.$('tr.selected').removeClass('selected');
         $(this).addClass('selected');
-        groupURL = "testservlet/groups" + "?projectID=" + projectID;
+        groupURL = "ajaxgroups" + "?project_id=" + projectID;
         groupTable.ajax.url(groupURL).load();
     });
+    
+    //Group click redirect
+    $('#groupTable tbody').on('click', 'tr', function(e) {
+		var rowIndex = groupTable.row( this ).index();
+		var redirectWithParam = "submission?group_id=" +groupTable.cell(rowIndex, 0).data();
+		window.location.href = redirectWithParam;
+	});
 
-
+    
+  //show Project Add modal on button click
+    $('#button_add_project').on('click', function(event) {
+    	$('#modal_project_label').html("Add Project");
+        tempProjectURL = addProjectURL + '?task_id=' + getUrlVars()["task_id"];
+        //alert(tempProjectURL);
+        $('#edit_project_title').val("");
+        $('#edit_project_submission_date').val("");
+        $('#modalProjectEdit').modal('show');
+    });
+    
     //show Project Edit modal on button click
     $('#projectTable tbody').on('click', 'td a.editbutton', function(e) {
+    	$('#modal_project_label').html("Edit Project");
         //e.stopImmediatePropagation(); // stop the row selection when clicking on an icon
+    	tempProjectURL = updateProjectURL;
         var rowIndex = projectTable.cell($(this).parent()).index().row;
         projectID = projectTable.cell(rowIndex, 0).data();
-        //alert('clicked button for id: ' + id);
+        $('#edit_project_id').val(projectTable.cell(rowIndex, 0).data());
         $('#edit_project_title').val(projectTable.cell(rowIndex, 1).data());
-        $('#edit_project_submission_date').val(projectTable.cell(rowIndex, 2).data());
-        $('#edit_project_members').val(projectTable.cell(rowIndex, 3).data());
+        $('#edit_project_desc').val(projectTable.cell(rowIndex, 2).data());
         $('#modalProjectEdit').modal('show');
     });
 
@@ -128,10 +152,8 @@ $(document).ready(function() {
     $('#groupTable tbody').on('click', 'td a.editbutton', function(e) {
         var rowIndex = groupTable.cell($(this).parent()).index().row;
         groupID = groupTable.cell(rowIndex, 0).data();
-        //alert('clicked button for id: ' + groupID);
         $("#edit_group_id").html(groupID);
         var members = groupTable.cell(rowIndex, 1).data();
-        //alert("members: " + members + "\nCount: " + members.length)
         for (var i = 0; i < 6; i++) {
             var temp = i + 1;
             if (i < members.length) {
@@ -164,9 +186,10 @@ $(document).ready(function() {
 
     //Submit Project Edit form
     $('#edit_project').submit(function(event) {
+    	alert("Temp Project Url: "+tempProjectURL);
         $.ajax({
             type: 'post', // define the type of HTTP verb we want to use (POST for our form)
-            url: projectURL + "?action=edit&", // the url where we want to POST
+            url: tempProjectURL, // the url where we want to POST
             data: $('#edit_project').serialize(), // our data object
             //dataType: 'json', // what type of data do we expect back from the server
             encode: true,
@@ -204,8 +227,9 @@ $(document).ready(function() {
     //Submit Project Delete form
     $('#buttonProjectDelete').on('click', function(event) {
         $.ajax({
+        	
             type: 'post', // define the type of HTTP verb we want to use (POST for our form)
-            url: 'TestServlet?action=delete&id=' + projectID, // the url where we want to POST
+            url: deleteProjectURL+'?projectId=' + projectID, // the url where we want to POST
             encode: true,
             success: function(data) {
                 $('#modalProjectDelete').modal('hide');
@@ -244,3 +268,18 @@ $(document).ready(function() {
 
 
 });
+
+//Getting parameters from url
+function getUrlVars()
+{
+	
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}

@@ -33,6 +33,8 @@
  
     <!-- Imports the configurations of the different infrastructure systems of the application -->
      <import resource="db-config.xml" />
+     
+    
 
     
 </beans>
