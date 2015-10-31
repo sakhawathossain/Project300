@@ -2,6 +2,7 @@
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -46,7 +47,7 @@
 		class="
                  col-sm-4 col-sm-offset-1
                  col-xs-12">
-		<a class="navbar-brand" href="project-groups.html">SUST Archives<sup>beta</sup></a>
+		<a class="navbar-brand" href="/greatweb">SUST Archives<sup>beta</sup></a>
 	</div>
 	<div
 		class="
@@ -55,40 +56,27 @@
 		<ul class="nav navbar-nav navbar-right">
 			<li><a href="#">Profile</a></li>
 			<li><a href="#">Settings</a></li>
-			<li><a href="sign-in.html">Log out</a></li>
+			<li><a href="sign-in.html">${username}</a></li>
 		</ul>
 	</div>
 </div>
 </nav>
 <div class="container">
-	
-
+	<input type="hidden" id="hidden_username" name="username" value=${username}></input>
 	<div class="panel">
-		<table id="courseTable class="table table-striped table-bordered table-hover">
+		<table id="courseTable"
+			class="table table-striped table-bordered table-hover">
 			<thead>
 				<tr>
-					<th>Course ID</th>
-					<th>Course Code</th>
-					<th>Course Title</th>
-					<th>Course Credit</th>
+					<th class="col-md-1 col-sm-1 col-xs-1">ID</th>
+					<th class="col-md-3 col-sm-3 col-xs-3">Course Code</th>
+					<th class="col-md-2 col-sm-2 col-xs-2">Course Title</th>
+					<th class="col-md-2 col-sm-2 col-xs-2">Course Credit</th>
+
 				</tr>
 			</thead>
-
 			<tbody>
-				<c:if test="${not empty courses}">
-					<c:forEach var="course" items="${courses}">
-						<tr>
-							<td>${course.getCourseId()}</td>
-							<td>${course.getCourseCode()}</td>
-							<td>${course.getCourseTitle()}</td>
-							<td>${course.getCredit()}</td>
-						</tr>
-						
-					</c:forEach>
-
-				</c:if>
 			</tbody>
 		</table>
 	</div>
-	<a href="<c:url value="/"/>">Index Page</a>
 </html>

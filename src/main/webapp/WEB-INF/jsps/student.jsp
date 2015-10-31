@@ -35,7 +35,7 @@
 			</c:if>
 		</tbody>
 	</table>
-	
+
 	<a href="<c:url value="/"/>">Index Page</a>
 </body>
 </html>

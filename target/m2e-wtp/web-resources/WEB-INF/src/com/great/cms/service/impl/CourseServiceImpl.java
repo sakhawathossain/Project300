@@ -24,4 +24,15 @@ public class CourseServiceImpl implements CourseService, Serializable{
 		return courseList;
 	}
 
+	@Override
+	public List<Course> getCourseListByUserId(int id) {
+		// TODO implement this method for god's sake.
+		return null;
+	}
+
+	@Override
+	public String getCourseById(int id) {
+		return this.courseDao.findById(id).getCourseCode();
+	}
+
 }
