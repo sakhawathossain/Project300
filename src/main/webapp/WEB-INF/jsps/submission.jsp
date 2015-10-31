@@ -28,7 +28,7 @@
             <div class="
                  col-sm-4 col-sm-offset-1
                  col-xs-12">
-                <a class="navbar-brand" href="submission.html">SUST Archives<sup>beta</sup></a>
+                <a class="navbar-brand" href="/greatweb">SUST Archives<sup>beta</sup></a>
             </div>
             <div class="
                  col-sm-5 col-sm-offset-1
@@ -121,7 +121,7 @@
                             <h4 class="modal-title" id="modal_label">Edit Submission</h4>
                         </div>
                         <div class="modal-body">
-
+							<input id="edit_submission_group_id" name="groupId" type="hidden"></input>
                             <div class="row bottom-buffer">
                                 <div class="col-md-4"><label>Date</label></div>
                                 <div class="col-md-8"><input name="submissionTime" id="edit_submission_date" type="date" class="form-control"></input></div>

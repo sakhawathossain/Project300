@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.great.cms.bean.ProjectBean;
 import com.great.cms.db.dao.ProjectDao;
 import com.great.cms.db.dao.TaskDao;
 import com.great.cms.db.dao.TaskProjectDao;
@@ -63,8 +64,12 @@ public class TaskProjectServiceImpl implements TaskProjectService,Serializable{
 
 
 	@Override
-	public void updateProject(Project project) {
-		projectDao.update(project);
+	public void updateProject(ProjectBean projectBean) {
+		System.out.println("Triggered Project Update: "+projectBean.toString());
+		Project project = this.projectDao.findById(projectBean.getProjectId());
+		project.setProjectTitle(projectBean.getProjectTitle());
+		project.setProjectDesc(projectBean.getProjectDesc());
+		this.projectDao.update(project);
 		
 	}
 

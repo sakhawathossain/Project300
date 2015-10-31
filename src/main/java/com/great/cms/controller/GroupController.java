@@ -112,7 +112,7 @@ public class GroupController {
 	@RequestMapping(value="/editgroup",method=RequestMethod.POST)
     public @ResponseBody String editGroup(int groupId ,List<Student> studentList )
     {
-		System.out.println("ProjectGroupController  -> editgroup");
+		System.out.println("GroupController  -> editgroup");
 		
 		projectGroupService.editGroupOfProject(groupId, studentList);
 		
@@ -122,7 +122,7 @@ public class GroupController {
 	@RequestMapping(value="/deletegroup",method=RequestMethod.POST)
     public @ResponseBody String deleteGroup(int groupId  )
     {
-		System.out.println("ProjectGroupController  -> deletegroup");
+		System.out.println("GroupController  -> deletegroup");
 		
 		projectGroupService.deleteGroupOfProject(groupId);
 		

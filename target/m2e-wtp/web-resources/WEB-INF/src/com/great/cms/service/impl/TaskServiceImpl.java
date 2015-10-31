@@ -63,8 +63,7 @@ public class TaskServiceImpl implements TaskService,Serializable {
 		
 		System.out.println("TaskServiceImpl.java: tryina edit this task with id "+task.getTaskId());
 		this.taskDao.update(task);
-		
-		
+				
 	}
 
 	@Override

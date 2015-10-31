@@ -45,11 +45,11 @@ public class TaskController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.GET, value = "/ajaxtasks")
 	public @ResponseBody
-	String getTaskList(Model model) {
-		System.out.println("get task list method");
+	String getTaskList(Model model,@RequestParam("course_id")int courseId) {
+		System.out.println("Course Id in Task Controller: "+courseId);
 		
 		// TODO: static list of tasks displayed for course_id 1, change to dynamic
-		List<Task> tasks = taskService.getTaskListByCourseId(1);
+		List<Task> tasks = taskService.getTaskListByCourseId(courseId);
 		model.addAttribute("tasks", tasks);
 		jsonArray = new JSONArray();
 		if (tasks == null)
@@ -95,11 +95,11 @@ public class TaskController {
 	String updateTask(Task task, BindingResult result,
 			@RequestParam("taskTypeId") int taskType,
 			@RequestParam("taskId") int taskId) {
+		
 		TaskType tt = new TaskType();
 		tt.setTaskTypeId(taskType);
 		task.setTaskId(taskId);
 		task.setTaskTypeId(tt);
-
 		taskService.updateTask(task);
 		return "{ \"success\" : true }";
 
@@ -108,12 +108,12 @@ public class TaskController {
 	@RequestMapping(value = "/addtask", method = RequestMethod.POST)
 	public @ResponseBody
 	String addTask(Task task, BindingResult result,
-			@RequestParam("taskTypeId") int taskType) {
+			@RequestParam("taskTypeId") int taskType,@RequestParam("course_id") int courseId) {
 		System.out.println("TaskController.java: Calling the addTask() method");
 		TaskType tt = new TaskType();
 		tt.setTaskTypeId(taskType);
 		task.setTaskTypeId(tt);
-		taskService.saveTask(task, 2, 2011);
+		taskService.saveTask(task, courseId, 2011);
 		return "{ \"success\" : true }";
 
 	}

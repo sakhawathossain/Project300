@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService, Serializable {
 	UserDao userDao;
 	
 	@Override
-	public User getUserByID(long id) {
+	public User getUserByID(Integer id) {
 		
 		User user;
 		

@@ -31,8 +31,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-
-
 import com.great.cms.bean.SubmissionBean;
 import com.great.cms.db.entity.Submission;
 import com.great.cms.db.entity.Task;
@@ -54,14 +52,14 @@ public class SubmissionController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.GET, value = "/ajaxsubmissions")
 	public @ResponseBody
-	String getSubmissionList(Model model) {
+	String getSubmissionList(Model model, @RequestParam("group_id") int groupId) {
+		System.out.println("Group Id: "+groupId);
 		List<Submission> submissionList = null;
 
 		submissionList = projGrpSubService
-				.findSubmissionListByProjectGroupId(2);
+				.findSubmissionListByProjectGroupId(groupId);
 
-		model.addAttribute("submissions", submissionList);
-
+		
 		jsonArray = new JSONArray();
 
 		if (submissionList == null)
@@ -78,7 +76,7 @@ public class SubmissionController {
 			 * if( s.getTaskTypeId().getTaskTypeId()==1) jsonObj.add("Project");
 			 * else jsonObj.add("Assignment");
 			 */
-		
+
 			jsonArray.add(jsonObj);
 		}
 
@@ -94,35 +92,34 @@ public class SubmissionController {
 
 		String submissionJson = parameters.toJSONString();
 
-		// System.out.print("DLSJDHSLKJDH:  "+taskJson);
 		return submissionJson;
 
 	}
 
-//	// Adding Submissions
-//	@RequestMapping(value = "/addsubmission",method = RequestMethod.POST)
-//	public @ResponseBody
-//	String addSubmission(SubmissionBean submission, BindingResult result,
-//			@RequestPart("submissionFileTest")Object file) {
-//		    
-//		       //MultipartFile file = request.getFile("submissionFile");
-//			         System.out
-//				.println("\nSubmissionController: addSubmission method.--> \n"
-//						+ submission.getCommentTeacher() + " \n"
-//						+ submission.getSubmissionTime());
-//		        if (file!=null ) {
-//		        	
-//		        	System.out.println("Succeeded to upload file: "
-//		        	+submission.getSubmissionFile());
-//		            
-//		        } else {
-//		        	System.out.println("You failed to upload because the file was empty.") ;
-//		        }
-//		 return "{ \"success\" : true }";
-//		
-//	}
+	// // Adding Submissions
+	// @RequestMapping(value = "/addsubmission",method = RequestMethod.POST)
+	// public @ResponseBody
+	// String addSubmission(SubmissionBean submission, BindingResult result,
+	// @RequestPart("submissionFileTest")Object file) {
+	//
+	// //MultipartFile file = request.getFile("submissionFile");
+	// System.out
+	// .println("\nSubmissionController: addSubmission method.--> \n"
+	// + submission.getCommentTeacher() + " \n"
+	// + submission.getSubmissionTime());
+	// if (file!=null ) {
+	//
+	// System.out.println("Succeeded to upload file: "
+	// +submission.getSubmissionFile());
+	//
+	// } else {
+	// System.out.println("You failed to upload because the file was empty.") ;
+	// }
+	// return "{ \"success\" : true }";
+	//
+	// }
 
-	// Adding Submissions
+	// Updating Submissions
 	@RequestMapping(value = "/editsubmission", method = RequestMethod.POST)
 	public @ResponseBody
 	String editSubmission(Submission submission, BindingResult result) {
@@ -130,101 +127,102 @@ public class SubmissionController {
 		// submissionService.updateSubmission(submission);
 		return "{ \"success\" : true }";
 	}
-	
+
+	// Adding Submissions
 	@RequestMapping(value = "/addsubmission", method = RequestMethod.POST)
-	public @ResponseBody String doUpload(Submission submission, 
-			@RequestParam("file") MultipartFile multipartFile
-			) throws FileNotFoundException { 
-		    System.out.println("We're in addSubmission/doUpload method.\nfilename: "
-			+multipartFile.getOriginalFilename()
-			+"\nComment: "+submission.getCommentTeacher());
-		    
-		    //Uploading file to a specific folder//
-		    
-//		    InputStream inputStream = null;
-//		    FileOutputStream outputStream =null;
-//		    
-//		    if(multipartFile.getSize()>0){
-//		    	try {
-//		    		inputStream = multipartFile.getInputStream();
-//					outputStream = new FileOutputStream("G:\\Work\\Upload Repo\\"+multipartFile.getOriginalFilename());
-//					int readBytes = 0;
-//					byte[] buffer = new byte[8192];
-//					while ((readBytes = inputStream.read(buffer, 0, 8192)) != -1) {
-//					System.out.println("===ddd=======");
-//					outputStream.write(buffer, 0, readBytes);
-//					}
-//					outputStream.close();
-//					inputStream.close();
-//					
-//		    	
-//		    	
-//		    	
-//		    	} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//		    	
-//		    }
-		    
-		    //Saving the Submission Entity//
-		   submissionService.saveSubmission(submission,2,multipartFile);
-		   
-		//projGrpSubService.addProjectGroupSubmit(submission, 2, multipartFile);
-	    return "Uploaded: " + multipartFile.getSize() + " bytes";
+	public @ResponseBody
+	String doUpload(SubmissionBean submissionBean,
+			@RequestParam("file") MultipartFile multipartFile)
+			throws FileNotFoundException {
+		System.out
+				.println("We're in addSubmission/doUpload method.\nfilename: "
+						+ multipartFile.getOriginalFilename() + "\nComment: "
+						+ submissionBean.getCommentTeacher());
+		// Uploading file to a specific folder//
+
+		// InputStream inputStream = null;
+		// FileOutputStream outputStream =null;
+		//
+		// if(multipartFile.getSize()>0){
+		// try {
+		// inputStream = multipartFile.getInputStream();
+		// outputStream = new
+		// FileOutputStream("G:\\Work\\Upload Repo\\"+multipartFile.getOriginalFilename());
+		// int readBytes = 0;
+		// byte[] buffer = new byte[8192];
+		// while ((readBytes = inputStream.read(buffer, 0, 8192)) != -1) {
+		// System.out.println("===ddd=======");
+		// outputStream.write(buffer, 0, readBytes);
+		// }
+		// outputStream.close();
+		// inputStream.close();
+		//
+		//
+		//
+		//
+		// } catch (IOException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		//
+		// }
+
+		// Saving the Submission Entity//
+		submissionService.saveSubmission(submissionBean, multipartFile);
+
+		// projGrpSubService.addProjectGroupSubmit(submission, 2,
+		// multipartFile);
+		return "Uploaded: " + multipartFile.getSize() + " bytes";
 	}
-	
+
 	@RequestMapping(value = "/downloadfile", method = RequestMethod.GET)
 	public @ResponseBody
-	String provideDownloadable(HttpServletRequest request,HttpServletResponse response) throws IOException {
-		System.out.println("Download file path: " + request.getParameter("filename"));
-		
-		
-		// submissionService.updateSubmission(submission);
-		
+	String provideDownloadable(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		System.out.println("Download file path: "
+				+ request.getParameter("filename"));
 
-		//Downloading the File
-		
+		// submissionService.updateSubmission(submission);
+
+		// Downloading the File
+
 		try {
-			File file = new File("G:/Work/Upload Repo/"+request.getParameter("filename")+".zip");
+			File file = new File("G:/Work/Upload Repo/"
+					+ request.getParameter("filename") + ".zip");
 			FileInputStream inputStream = new FileInputStream(file);
-			
-		    //MIME type of the file
+
+			// MIME type of the file
 			response.setContentType("application/octet-stream");
-			response.setHeader("Content-Disposition", "attachment; filename=\""+file.getName()+"\"");
-			
-			//Read from the file and write into the response
+			response.setHeader("Content-Disposition", "attachment; filename=\""
+					+ file.getName() + "\"");
+
+			// Read from the file and write into the response
 			ServletOutputStream os = response.getOutputStream();
-			
-			
+
 			byte[] buffer = new byte[1024];
 			int len;
-			while((len=inputStream.read(buffer))!= -1){
-				os.write(buffer,0,len);
+			while ((len = inputStream.read(buffer)) != -1) {
+				os.write(buffer, 0, len);
 			}
-			
+
 			os.flush();
 			os.close();
 			inputStream.close();
-			
+
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-             		
-		
-		
-		
+
 		return "{ \"success\" : true }";
 	}
-	
+
 	@RequestMapping(value = "/deletesubmission", method = RequestMethod.POST)
-	public @ResponseBody String deleteSubmission(@RequestParam("submissionId") int submissionId) {
+	public @ResponseBody
+	String deleteSubmission(@RequestParam("submissionId") int submissionId) {
 
 		submissionService.deleteSubmission(submissionId);
 		return "{ \"success\" : true }";
 	}
-	
-	
 
 }

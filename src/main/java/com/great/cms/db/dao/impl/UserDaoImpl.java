@@ -11,7 +11,7 @@ import com.great.cms.db.entity.UserType;
 
 //Tested
 @Repository("User")
-public class UserDaoImpl extends GenericDaoImpl<User, Long>implements UserDao {
+public class UserDaoImpl extends GenericDaoImpl<User, Integer>implements UserDao {
 
 
 
@@ -22,15 +22,25 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long>implements UserDao {
 
 	
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public User findUserByName(String Name) {
 		User user = null;
+		List<User> list = null;
 		try{
-			user = (User) em.createQuery("select o from " + type.getName() + " o where o.userName="+Name+" ").getResultList().get(0);
+			String query = "select o from " + type.getName() + " o where " +
+  				   "o.userName = ?1 ";
+//			user = (User) em.createNamedQuery(query).setParameter(1,Name).getResultList().get(0);
+			
+			list = em.createQuery(query)
+					.setParameter(1, Name)
+					.getResultList();
+			user = list.get(0);
  	             
  		}
 		catch(Exception e){
-			System.out.println("*******failure*******");
+			System.out.println("*******failure Exception*******");
+			e.printStackTrace();
         }
 		    System.out.println("*******successful*******");
 		return user;

@@ -46,13 +46,15 @@ $(document)
 													"sWidth" : "10%",
 													"mRender" : function(data,
 															type, full) {
-														return '<a class="btn btn-info btn-sm editbutton"><i class="glyphicon glyphicon-edit "></i></a>'
-																+ '<a class="btn btn-danger btn-sm removebutton"><i class="glyphicon glyphicon-remove "></i></a>';
+														return '<a class="btn btn-info btn-sm editbutton">'
+																+ '<i class="glyphicon glyphicon-edit "></i></a>'
+																+ '<a class="btn btn-danger btn-sm removebutton">'
+																+ '<i class="glyphicon glyphicon-remove "></i></a>';
 													}
 												} ],
 										ajax : {
-											url : submissionURL,
-											type : 'get',
+											url : submissionURL + "?group_id="
+													+ getUrlVars()["group_id"],
 											dataType : 'json'
 										}
 									});
@@ -79,17 +81,12 @@ $(document)
 								$('#modalSubmissionInfo').modal('show');
 							});
 
-					// go to project-groups.html on row click
-					/*
-					 * $('#submissionTable tbody').on('click', 'tr', function() {
-					 * window.location.href = "project-groups.html"; });
-					 */
-
 					// show Submission Add modal on button click
 					$('#button_add_submission').on('click', function(event) {
 
 						tempURL = addSubmissionURL;
 						$('#modal_label').html("Add Submission");
+						$('#edit_submission_group_id').val(getUrlVars()["group_id"]);
 						$('#edit_submission_date').val("");
 						$("#edit_submission_comment").val("");
 						$('#edit_submission_date').val("06/01/2015 12:00:00");
@@ -101,11 +98,7 @@ $(document)
 							'click',
 							'td a.editbutton',
 							function(e) {
-								e.stopImmediatePropagation(); // stop the row
-																// selection
-																// when clicking
-																// on an icon
-
+								e.stopImmediatePropagation();
 								tempURL = editSubmissionURL;
 								var rowIndex = submissionTable.cell(
 										$(this).parent()).index().row;
@@ -127,9 +120,9 @@ $(document)
 							'td a.removebutton',
 							function(e) {
 								e.stopImmediatePropagation(); // stop the row
-																// selection
-																// when clicking
-																// on an icon
+								// selection
+								// when clicking
+								// on an icon
 								var rowIndex = submissionTable.cell(
 										$(this).parent()).index().row;
 								submissionID = submissionTable
@@ -142,55 +135,25 @@ $(document)
 						saveMedia();
 						event.preventDefault();
 					});
-					// Submit Submission Edit form
-
-					/*
-					 * $('#edit_submission').submit(function(event) {
-					 * 
-					 * //var formData = new FormData($('form')[0]); //var
-					 * formData = new FormData($('#edit_submission'));
-					 *  // var request = new FormData(); //
-					 * $.each(context.prototype.fileData, function(i, obj) {
-					 * request.append(i, obj.value.files[0]); }); //
-					 * request.append('action', 'upload'); //
-					 * request.append('id', response.obj.id);
-					 * 
-					 * //var formData = new FormData($('#edit_submission')[0]);
-					 * alert('hitting URL: '+tempURL);
-					 * 
-					 * $.ajax({
-					 * 
-					 * type: 'post', // define the type of HTTP verb we want to
-					 * use (POST for our form)
-					 * 
-					 * url: tempURL, // the url where we want to POST data:
-					 * $('#edit_submission').serialize(), // our data object
-					 * //data = formData, // CAUTION: this line breaks the
-					 * javascript //dataType: 'multipart/form-data', // what
-					 * type of data do we expect back from the server
-					 * //dataType: 'json' enctype: 'multipart/form-data',
-					 * //processType=false, // CAUTION: this line breaks the
-					 * javascript //contentType: false, // CAUTION:this line
-					 * breaks the javascript //processData = false, // CAUTION:
-					 * this line breaks the javascript cache : false, success:
-					 * function(data) { $('#modalSubmissionEdit').modal('hide');
-					 * submissionTable.ajax.reload(); } }),
-					 * event.preventDefault(); });
-					 */
 
 					// Submit Submission Delete form
-					$('#buttonSubmissionDelete').on('click', function(event) {
-						$.ajax({
-							type : 'post', // define the type of HTTP verb we
-											// want to use (POST for our form)
-							url : deleteSubmissionURL + "?submissionId=" + submissionID,
-							encode : true,
-							success : function(data) {
-								$('#modalSubmissionDelete').modal('hide');
-								submissionTable.ajax.reload();
-							}
-						}), event.preventDefault();
-					});
+					$('#buttonSubmissionDelete').on(
+							'click',
+							function(event) {
+								$.ajax({
+									type : 'post', // define the type of HTTP
+									// verb we
+									// want to use (POST for our form)
+									url : deleteSubmissionURL
+											+ "?submissionId=" + submissionID,
+									encode : true,
+									success : function(data) {
+										$('#modalSubmissionDelete').modal(
+												'hide');
+										submissionTable.ajax.reload();
+									}
+								}), event.preventDefault();
+							});
 
 				});
 
@@ -198,16 +161,15 @@ function saveMedia() {
 	var form = document.getElementById('edit_submission');
 	var formData = new FormData(form);
 	var selectedFileName = $("#edit_submission_file").val();
-	if (selectedFileName === null | selectedFileName === "") 
+	if (selectedFileName === null | selectedFileName === "")
 		alert('We have >>' + selectedFileName + '<<');
 	if (selectedFileName != null && selectedFileName != "") {
 		formData.append('file', $('input[type=file]')[0].files[0]);
+	} else {
+		// formData = "";
+		// formData = $('#edit_submission').serialize();
 	}
-	else {
-		//formData = "";
-		//formData =  $('#edit_submission').serialize();
-	}
-	//console.log("form data " + formData);
+	// console.log("form data " + formData);
 	$.ajax({
 		url : 'addsubmission',
 		data : formData,
@@ -223,4 +185,17 @@ function saveMedia() {
 			alert("failed to upload data");
 		}
 	});
+}
+
+function getUrlVars() {
+
+	var vars = [], hash;
+	var hashes = window.location.href.slice(
+			window.location.href.indexOf('?') + 1).split('&');
+	for ( var i = 0; i < hashes.length; i++) {
+		hash = hashes[i].split('=');
+		vars.push(hash[0]);
+		vars[hash[0]] = hash[1];
+	}
+	return vars;
 }

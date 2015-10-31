@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.great.cms.bean.ProjectBean;
 import com.great.cms.db.entity.Project;
 import com.great.cms.db.entity.Submission;
 import com.great.cms.service.TaskProjectService;
@@ -81,16 +82,16 @@ public class ProjectController {
 	
 }
 	@RequestMapping(value="/addproject",method=RequestMethod.POST)
-    public @ResponseBody String addProject(Project project,int taskId)
+    public @ResponseBody String addProject(Project project, @RequestParam("task_id")int taskId)
     {
-		System.out.println("Project Controller -> addproject");
+		System.out.println("Project Controller -> addproject----------> "+taskId);
 		// TODO: to which task are we adding this project!? Current function param is static
-		taskProjectService.addProjectOfTask(project, 1);
+		taskProjectService.addProjectOfTask(project,taskId);
 		return "{ \"success\" : true }";
     }
 	
 	@RequestMapping(value="/updateproject",method=RequestMethod.POST)
-    public @ResponseBody String updateProject(Project project)
+    public @ResponseBody String updateProject(ProjectBean project)
     {
 		System.out.println("Project Controller -> updateProject");
 		taskProjectService.updateProject(project);

@@ -40,10 +40,12 @@
 	</nav>
 
 	<form action="checklogin" method="post">
-		<p id="login_status_message"><c:out value ='${message}'/></p>
-		<input id="username" name="username"></input> <input id="password"
-			name="password" type="password"></input> <input type="submit"
-			value="Log in"></input>
+		<p id="login_status_message">
+			<c:out value='${message}' />
+		</p>
+		<input id="username" name="user_name"></input> 
+		<input id="password"name="password" type="password"></input> 
+		<input type="submit" value="Log in"></input>
 	</form>
 </body>
 </html>
