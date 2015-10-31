@@ -5,7 +5,7 @@ var courseTable;
 
 $(document).ready(
 		function() {
-
+			//alert('user here is: '+ $('#hidden_username').val());
 			$('[data-toggle="tooltip"]').tooltip();
 			courseTable = $('#courseTable').DataTable({
 				"dom" : 'lrtip',
@@ -29,7 +29,8 @@ $(document).ready(
 
 				],
 				ajax : {
-					url : courseURL+"?userId="+ getUrlVars()["userId"],
+					url : courseURL + "?username=" + $('#hidden_username').val(),
+					//url: courseURL,
 					type : 'get',
 					dataType : 'json'
 				}

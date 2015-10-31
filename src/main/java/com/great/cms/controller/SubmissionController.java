@@ -38,8 +38,9 @@ import com.great.cms.service.ProjectGroupSubmitService;
 import com.great.cms.service.SubmissionService;
 
 @Controller
-// @SessionAttributes("organization")
 public class SubmissionController {
+	
+	// TODO: handle no-file Add and Edit submission
 
 	@Autowired
 	private SubmissionService submissionService;

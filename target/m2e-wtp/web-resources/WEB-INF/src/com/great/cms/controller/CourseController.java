@@ -26,28 +26,25 @@ public class CourseController {
 
 	@Autowired
 	private CourseService courseService;
-	
+
 	@Autowired
 	private CourseRegistrationService courseRegistrationService;
-	
+
 	JSONArray jsonArray;
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.GET, value = "/ajaxcourse")
 	public @ResponseBody
-		String getCourse(Model model,HttpServletRequest request) {
-		System.out.println("Response Object:"+request.getParameter("userId").toString());		
-		System.out.println("Course Controller");
-		List<Course> courses = courseService.getCourseList();//courseRepository.findAll();		
-		model.addAttribute("courses", courses);
-		
+	String getCourse(@RequestParam("username") String username) {
+
+		// TODO: use username to return filtered course list
+		List<Course> courses = courseService.getCourseList();
+
 		jsonArray = new JSONArray();
 		if (courses == null)
 			System.out.println("CourseController : LIST IS NULL");
-	
-		//List<CourseRegistration> courseRegList = courseRegistrationService.getStudentRegistration(2);
-		//System.out.println("####"+);
-		for(Course c: courses){
+
+		for (Course c : courses) {
 			JSONArray jObj = new JSONArray();
 			jObj.add(c.getCourseId());
 			jObj.add(c.getCourseCode());
@@ -58,17 +55,11 @@ public class CourseController {
 		JSONObject parameters = new JSONObject();
 
 		parameters.put("draw", 1);
-
 		parameters.put("recordsTotal", 1);
-
 		parameters.put("recordsFiltered", 1);
-
 		parameters.put("data", jsonArray);
-
 		String taskJson = parameters.toJSONString();
 
-		// System.out.print("DLSJDHSLKJDH:  "+taskJson);
 		return taskJson;
 	}
-
 }

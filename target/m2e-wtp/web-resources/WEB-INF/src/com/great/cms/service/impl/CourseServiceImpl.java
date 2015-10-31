@@ -26,7 +26,7 @@ public class CourseServiceImpl implements CourseService, Serializable{
 
 	@Override
 	public List<Course> getCourseListByUserId(int id) {
-		// TODO Auto-generated method stub
+		// TODO implement this method for god's sake.
 		return null;
 	}
 

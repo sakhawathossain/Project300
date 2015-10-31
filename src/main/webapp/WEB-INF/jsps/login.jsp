@@ -32,7 +32,7 @@
 			class="
                  col-sm-4 col-sm-offset-1
                  col-xs-12">
-			<a class="navbar-brand" href="project-groups.html">SUST Archives<sup>beta</sup></a>
+			<a class="navbar-brand" href="/greatweb">SUST Archives<sup>beta</sup></a>
 		</div>
 	</div>
 	</nav>
