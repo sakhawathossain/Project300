@@ -49,7 +49,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService, Serializa
 	@Override
 	public String getCourseListByUserId(Long userId) {
 
-		teacher = teacherDao.findByUserId(userId);
+		teacher = (List<Teacher>) teacherDao.findByUserId(userId);
 		for (Teacher teachers : teacher) {
 
 			InstructorId = teachers.getInstructorId();

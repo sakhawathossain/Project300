@@ -17,12 +17,12 @@ public class TeacherDaoImpl extends GenericDaoImpl <Teacher, Long>implements Tea
 	}
 
 	@Override
-	public List<Teacher> findByUserId(Long userId)  {
-		List<Teacher> teacher = null;
+	public Teacher findByUserId(Long userId)  {
+		Teacher teacher = new Teacher();
 		try{
 			String query = "select o from " + type.getName() + " o where"
 					+ " o.userId.userId = ?1";
-			teacher=em.createQuery(query).setParameter(1, userId).getResultList();
+			teacher=(Teacher) em.createQuery(query).setParameter(1, userId).getResultList().get(0);
 		}catch(Exception e){
 			System.out.println("*******Fail*********");
 			System.out.println(e.getMessage());
