@@ -75,10 +75,12 @@
 			<div class="col-xs-2">
 				<select id="session" class="form-control">
 					<option>All</option>
+					<!--  
 					<option>2011-12</option>
 					<option>2010-11</option>
 					<option>2009-10</option>
 					<option>2008-09</option>
+					-->
 				</select>
 			</div>
 			<div class="col-xs-2">

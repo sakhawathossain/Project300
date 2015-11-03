@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.great.cms.bean.ProjectBean;
 import com.great.cms.db.entity.Project;
 import com.great.cms.db.entity.Submission;
+import com.great.cms.service.ExamCommitteeService;
 import com.great.cms.service.TaskProjectService;
 
 @Controller
@@ -22,6 +23,8 @@ public class ProjectController {
 	
 	@Autowired
 	private TaskProjectService taskProjectService;
+	@Autowired
+	private ExamCommitteeService examCommitteeService;
 	private JSONArray jsonArray;
 
 	@SuppressWarnings("unchecked")
@@ -103,5 +106,12 @@ public class ProjectController {
 
 		taskProjectService.deleteProjectOfTask(projectId);
 		return "{ \"success\" : true }";
+	}
+	
+	@RequestMapping(value = "/getsessions", method = RequestMethod.GET)
+	public @ResponseBody String getSessionList(){
+		String data =  examCommitteeService.getAllSession();
+		return "{\"Result\":\"OK\",\"Options\":" + data + "}";
+		//return data;
 	}
 }

@@ -10,11 +10,27 @@ var tempProjectURL
 var projectID;
 var groupID;
 var memberCounter;
-var maxAllowedMembers = 6
+var maxAllowedMembers = 6;
+var items = "";
 
 $(document).ready(function() {
     var projectTable;
     var groupTable;
+    
+    $.getJSON("getsessions", function(data) {
+    	
+    	$.each(data, function(index, item)
+    	        {
+    	            if (item !== 'OK') {
+    	                for (var i = 0; i < item.length; i++) {
+    	                    items += "<option value='" + item[i] + "'>" + item[i] + "</option>";
+    	                }
+    	            }
+    	        });
+        //alert(items);
+        $("#session").append(items);
+    });
+    
     $('[data-toggle="tooltip"]').tooltip();
     projectTable = $('#projectTable').DataTable({
         "dom": 'lrtip',
