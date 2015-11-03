@@ -6,6 +6,7 @@ import com.great.cms.db.entity.Course;
 
 public interface CourseService {
 	List<Course> getCourseList();
-	List<Course> getCourseListByUserId(int id);
+	List<Course> getCourseListByUserId(Long id);
 	String getCourseById(int id);
+	List<Course> getCourseListByUser(String username);
 }

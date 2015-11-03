@@ -13,7 +13,7 @@ import com.great.cms.db.entity.Teacher;
  */
 public interface TeacherDao extends GenericDao<Teacher, Long> {
 	
-	public List<Teacher> findByUserId(Long userId)throws RuntimeException;
+	public Teacher findByUserId(Long userId)throws RuntimeException;
 	
 	public Teacher findByEmployeeCode(String code) throws RuntimeException;
 	
