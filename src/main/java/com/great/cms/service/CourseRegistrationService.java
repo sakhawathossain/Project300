@@ -1,6 +1,5 @@
 package com.great.cms.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.great.cms.db.entity.CourseRegistration;
