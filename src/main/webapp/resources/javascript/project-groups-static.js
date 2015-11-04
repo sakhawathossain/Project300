@@ -17,8 +17,8 @@ $(document).ready(function() {
     var projectTable;
     var groupTable;
     
-    $.getJSON("getsessions", function(data) {
-    	
+    // Get session list for drop down options
+    $.getJSON("getsessions", function(data) { 	
     	$.each(data, function(index, item)
     	        {
     	            if (item !== 'OK') {
@@ -31,7 +31,10 @@ $(document).ready(function() {
         $("#session").append(items);
     });
     
+    // Enable tooltips for registration ids in group table
     $('[data-toggle="tooltip"]').tooltip();
+    
+    // Init Datatable for Project
     projectTable = $('#projectTable').DataTable({
         "dom": 'lrtip',
         "processing": true,
@@ -40,6 +43,9 @@ $(document).ready(function() {
         "autoWidth": false,
         "fnInitComplete": function(oSettings, json) {
             $('#projectTable tbody tr:eq(0)').click();
+        },
+        "fnDrawCallback": function( oSettings ) {
+        	$('#projectTable tbody tr:eq(0)').click();
         },
         "aoColumns": [{
                 "mData": 0,
@@ -68,7 +74,7 @@ $(document).ready(function() {
        
     });
     
-    
+    // Init Datatable for Group
     groupTable = $('#groupTable').DataTable({
         "dom": 'lrtip',
         "processing": true,
@@ -166,10 +172,11 @@ $(document).ready(function() {
 
     //show Group Edit modal on button click
     $('#groupTable tbody').on('click', 'td a.editbutton', function(e) {
+    	e.stopImmediatePropagation();
         var rowIndex = groupTable.cell($(this).parent()).index().row;
         groupID = groupTable.cell(rowIndex, 0).data();
         $("#edit_group_id").html(groupID);
-        var members = groupTable.cell(rowIndex, 1).data();
+        var members = groupTable.cell(rowIndex, 2).data();
         for (var i = 0; i < 6; i++) {
             var temp = i + 1;
             if (i < members.length) {
@@ -261,7 +268,7 @@ $(document).ready(function() {
     $('#buttonGroupDelete').on('click', function(event) {
         $.ajax({
             type: 'post', // define the type of HTTP verb we want to use (POST for our form)
-            url: 'TestServlet?action=delete&id=' + groupID, // the url where we want to POST
+            url: deleteGroupURL + '?group_id=' + groupID, // the url where we want to POST
             encode: true,
             success: function(data) {
                 $('#modalGroupDelete').modal('hide');
@@ -275,11 +282,15 @@ $(document).ready(function() {
 
     //Filtering table
     $('#button-search-table').click(function(e) {
-        e.preventDefault();
+        //e.preventDefault();
         value = $('#searchtext').val();
-        projectURL = "testservlet/projects" + "?session=" + $('#session').val() + "&semester=" + $('#semester').val();
-        projectTable.ajax.url(projectURL).load();
+        tempURL = projectURL+"?task_id="+getUrlVars()["task_id"];
+        tempURL = tempURL + "&session=" + $('#session').val() + "&semester=" + $('#semester').val();
+        //alert(tempURL);
+        projectTable.ajax.url( tempURL ).load();
         projectTable.search(value).draw();
+        
+        //projectTable.draw();
     });
 
 

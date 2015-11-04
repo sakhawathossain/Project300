@@ -29,9 +29,12 @@ public class ProjectController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method=RequestMethod.GET,value="/ajaxprojects")
-	public @ResponseBody String getProjectList(Model model,@RequestParam("task_id") int taskId)
+	public @ResponseBody String getProjectList(Model model,@RequestParam("task_id") int taskId,
+			@RequestParam(required = false) String session,
+			@RequestParam(required = false) String semester)
 	{
-		//System.out.println("Project Controller -> getProjectList");
+		System.out.println("HERE Project Controller -> getProjectList: session = " + session);
+		System.out.println("HERE Project Controller -> getProjectList: semester = " + semester);
 		//System.out.println("Task Id: "+taskId);
 		List<Project> projectList = null;
 		
