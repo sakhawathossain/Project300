@@ -10,6 +10,22 @@ $(document)
 		.ready(
 				function() {
 					var taskTable;
+					var items = "";
+					// Get session list for drop down options
+					$.getJSON("getsessions", function(data) {
+						$.each(data, function(index, item) {
+							if (item !== 'OK') {
+								for ( var i = item.length - 1; i >= 0; i--) {
+									items += "<option value='" + item[i] + "'>"
+											+ item[i] + "</option>";
+								}
+							}
+						});
+						$("#filter_session").append(items);
+						$("#session").append(items);
+					});
+					
+					// Enable Tooltips
 					$('[data-toggle="tooltip"]').tooltip();
 					taskTable = $('#taskTable')
 							.DataTable(
@@ -96,13 +112,11 @@ $(document)
 					$('#button_add_task').on('click', function(event) {
 						tempURL = addTaskURL;
 						$('#modal_label').html("Add task");
-						$('#edit_task_title').val("Borrow some idea");
-						$('#edit_task_description').val("Lorem Ipsum");
+						$('#edit_task_title').val("");
+						$('#edit_task_description').val("");
 						$('#edit_task_deadline').val("06/01/2015 12:00:00");
-						$('#edit_task_group_number').val("10");
-						$('#edit_task_total_submission').val("11");
+						$('#edit_task_total_submission').val("10");
 						$('edit_task_sopen').val("true");
-						$("#edit_task_type").val("1");
 						$('#edit_task_description').val("");
 						$('#modalTaskEdit').modal('show');
 					});
@@ -120,12 +134,24 @@ $(document)
 										taskID = taskTable.cell(rowIndex, 0)
 												.data();
 										$('#modal_label').html("Edit task");
+										
+										$('#edit_task_id').val(
+												taskTable.cell(rowIndex, 0)
+														.data());
+										
 										$('#edit_task_title').val(
 												taskTable.cell(rowIndex, 1)
 														.data());
 										$("#edit_task_type").val(
 												taskTable.cell(rowIndex, 2)
 														.data());
+//										if ( taskTable.cell(rowIndex, 2).data() == 1)
+//											$("#edit_task_type").val("Assignment");
+//										else if ( taskTable.cell(rowIndex, 2).data() == 2)
+//											$("#edit_task_type").val("Project");
+//										else if ( taskTable.cell(rowIndex, 2).data() == 3)
+//											$("#edit_task_type").val("Thesis");
+										
 										$('#edit_task_description').val(
 												taskTable.cell(rowIndex, 3)
 														.data());
@@ -140,6 +166,7 @@ $(document)
 											$('#edit_task_sopen').prop(
 													'checked', false);
 										$('#modalTaskEdit').modal('show');
+										
 										$('#edit_task_group_number').val(
 												taskTable.cell(rowIndex, 6)
 														.data());

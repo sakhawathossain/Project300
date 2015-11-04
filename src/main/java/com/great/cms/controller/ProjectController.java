@@ -23,18 +23,15 @@ public class ProjectController {
 	
 	@Autowired
 	private TaskProjectService taskProjectService;
-	@Autowired
-	private ExamCommitteeService examCommitteeService;
+	
 	private JSONArray jsonArray;
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method=RequestMethod.GET,value="/ajaxprojects")
-	public @ResponseBody String getProjectList(Model model,@RequestParam("task_id") int taskId,
-			@RequestParam(required = false) String session,
-			@RequestParam(required = false) String semester)
+	public @ResponseBody String getProjectList(Model model,@RequestParam("task_id") int taskId)
+			//@RequestParam(required = false) String session,
+			//@RequestParam(required = false) String semester)
 	{
-		System.out.println("HERE Project Controller -> getProjectList: session = " + session);
-		System.out.println("HERE Project Controller -> getProjectList: semester = " + semester);
 		//System.out.println("Task Id: "+taskId);
 		List<Project> projectList = null;
 		
@@ -109,12 +106,5 @@ public class ProjectController {
 
 		taskProjectService.deleteProjectOfTask(projectId);
 		return "{ \"success\" : true }";
-	}
-	
-	@RequestMapping(value = "/getsessions", method = RequestMethod.GET)
-	public @ResponseBody String getSessionList(){
-		String data =  examCommitteeService.getAllSession();
-		return "{\"Result\":\"OK\",\"Options\":" + data + "}";
-		//return data;
 	}
 }
