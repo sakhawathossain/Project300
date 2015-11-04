@@ -161,17 +161,21 @@ function saveMedia() {
 	var form = document.getElementById('edit_submission');
 	var formData = new FormData(form);
 	var selectedFileName = $("#edit_submission_file").val();
-	if (selectedFileName === null | selectedFileName === "")
-		alert('We have >>' + selectedFileName + '<<');
+	if (selectedFileName === null | selectedFileName === ""){
+		tempURL = tempURL +'nofile';
+		//alert('We have >>' + tempURL + '<<');
+
+	}
 	if (selectedFileName != null && selectedFileName != "") {
 		formData.append('file', $('input[type=file]')[0].files[0]);
+		
 	} else {
 		// formData = "";
 		// formData = $('#edit_submission').serialize();
 	}
 	// console.log("form data " + formData);
 	$.ajax({
-		url : 'addsubmission',
+		url : tempURL+"?submissionId=" + submissionID,
 		data : formData,
 		// dataType: json,
 		processData : false,

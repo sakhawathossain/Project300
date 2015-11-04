@@ -32,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.great.cms.bean.SubmissionBean;
+import com.great.cms.db.dao.SubmissionDao;
 import com.great.cms.db.entity.Submission;
 import com.great.cms.db.entity.Task;
 import com.great.cms.service.ProjectGroupSubmitService;
@@ -40,7 +41,13 @@ import com.great.cms.service.SubmissionService;
 @Controller
 public class SubmissionController {
 	
-	// TODO: handle no-file Add and Edit submission
+	// TODO: Redirect to another page if there is no download file
+    // TODO: Auto Reload With Updated values in the table after we edit.
+	// TODO: Please Fix the Date Picking thing.
+	
+	
+	@Autowired
+	private SubmissionDao submissionDao;
 
 	@Autowired
 	private SubmissionService submissionService;
@@ -97,39 +104,23 @@ public class SubmissionController {
 
 	}
 
-	// // Adding Submissions
-	// @RequestMapping(value = "/addsubmission",method = RequestMethod.POST)
-	// public @ResponseBody
-	// String addSubmission(SubmissionBean submission, BindingResult result,
-	// @RequestPart("submissionFileTest")Object file) {
-	//
-	// //MultipartFile file = request.getFile("submissionFile");
-	// System.out
-	// .println("\nSubmissionController: addSubmission method.--> \n"
-	// + submission.getCommentTeacher() + " \n"
-	// + submission.getSubmissionTime());
-	// if (file!=null ) {
-	//
-	// System.out.println("Succeeded to upload file: "
-	// +submission.getSubmissionFile());
-	//
-	// } else {
-	// System.out.println("You failed to upload because the file was empty.") ;
-	// }
-	// return "{ \"success\" : true }";
-	//
-	// }
-
+	
 	// Updating Submissions
 	@RequestMapping(value = "/editsubmission", method = RequestMethod.POST)
 	public @ResponseBody
-	String editSubmission(Submission submission, BindingResult result) {
-
-		// submissionService.updateSubmission(submission);
+	String editSubmission(SubmissionBean submissionBean,
+			@RequestParam("file") MultipartFile multipartFile,
+			@RequestParam("submissionId") int submissionId)
+			throws FileNotFoundException {
+        		
+		submissionService.updateSubmissionWithFile(submissionBean,multipartFile,submissionId);
 		return "{ \"success\" : true }";
 	}
+	
+	
 
 	// Adding Submissions
+	//addsubmissionnofile
 	@RequestMapping(value = "/addsubmission", method = RequestMethod.POST)
 	public @ResponseBody
 	String doUpload(SubmissionBean submissionBean,
@@ -175,6 +166,28 @@ public class SubmissionController {
 		// multipartFile);
 		return "Uploaded: " + multipartFile.getSize() + " bytes";
 	}
+	
+	@RequestMapping(value = "/addsubmissionnofile", method = RequestMethod.POST)
+	public @ResponseBody
+	String doUploadWithNoFile(SubmissionBean submissionBean)
+	{
+		System.out.println("Add Submission with no file-Controller Layer");
+
+		submissionService.saveSubmission(submissionBean);
+		return "{ \"success\" : true }";
+	}
+	
+	@RequestMapping(value = "/editsubmissionnofile", method = RequestMethod.POST)
+	public @ResponseBody
+	String doUploadEditWithNoFile(SubmissionBean submissionBean,@RequestParam("submissionId")int submissionId)
+	{
+		System.out.println("Edit Submission with no file upload hit in the Controller layer");
+
+		submissionService.updateSubmission(submissionBean,submissionId);
+		return "{ \"success\" : true }";
+	}
+	
+	
 
 	@RequestMapping(value = "/downloadfile", method = RequestMethod.GET)
 	public @ResponseBody
@@ -186,10 +199,13 @@ public class SubmissionController {
 		// submissionService.updateSubmission(submission);
 
 		// Downloading the File
+		System.out.println("File Name: "+request.getParameter("filename"));
 
 		try {
 			File file = new File("G:/Work/Upload Repo/"
 					+ request.getParameter("filename") + ".zip");
+			
+			
 			FileInputStream inputStream = new FileInputStream(file);
 
 			// MIME type of the file
@@ -213,6 +229,7 @@ public class SubmissionController {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		}
 
 		return "{ \"success\" : true }";

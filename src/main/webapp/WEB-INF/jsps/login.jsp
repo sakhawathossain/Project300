@@ -10,6 +10,15 @@
 <title>SUST Archives</title>
 <link href="<c:url value="/resources/css/topbar.css" />"
 	rel="stylesheet" type="text/css" />
+	
+	<link href="<c:url value="/resources/css/reset.css" />"
+	rel="stylesheet" type="text/css" />
+	
+	<link href="<c:url value="/resources/css/animate.css" />"
+	rel="stylesheet" type="text/css" />
+	
+	<link href="<c:url value="/resources/css/styles.css" />"
+	rel="stylesheet" type="text/css" />
 
 <link href="<c:url value="/resources/css/bootstrap.min.css" />"
 	rel="stylesheet" type="text/css" />
@@ -38,7 +47,7 @@
 	</nav>
 	</div>
 	</nav>
-
+<!--  
 	<form action="checklogin" method="post">
 		<p id="login_status_message">
 			<c:out value='${message}' />
@@ -46,6 +55,38 @@
 		<input id="username" name="user_name"></input> 
 		<input id="password"name="password" type="password"></input> 
 		<input type="submit" value="Log in"></input>
-	</form>
+	</form>  -->
+	
+
+     <div id="container">
+		
+		<form action="checklogin" method="post">
+		
+		<label for="name">Username:</label>
+		
+		<input type="name" id="username" name="user_name">
+		
+		<label for="username">Password:</label>
+		
+		
+		
+		<input id="password"name="password" type="password">
+		
+		<div id="lower">
+		
+		
+		
+		<input type="submit" value="Login">
+		
+		<p id="login_status_message">
+			<c:out value='${message}' />
+		</p>
+		
+		</div>
+		
+		</form>
+		
+	</div>
+	
 </body>
 </html>

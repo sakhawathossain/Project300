@@ -7,11 +7,15 @@ import com.great.cms.db.entity.Submission;
 
 public interface SubmissionService {
 	
-	public void updateSubmission(Submission submission);
+	public void updateSubmission(SubmissionBean submissionBean,int submissionId);
+	
+	public void updateSubmissionWithFile(SubmissionBean submissionBean,MultipartFile multipartFile,int submissionId);
 	
 	public void saveSubmission(SubmissionBean submissionBean, MultipartFile multipartFile);
 	
 	public void deleteSubmission(int submissionId);
+	
+	public void saveSubmission(SubmissionBean submissionBean);
 	
 
 }

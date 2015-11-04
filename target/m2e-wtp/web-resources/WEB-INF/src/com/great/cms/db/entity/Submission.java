@@ -149,7 +149,7 @@ public class Submission implements Serializable,DomainObject {
 
     @Override
     public String toString() {
-        return "com.sustarchive.app.model.Submission[ submissionId=" + submissionId + " ]";
+        return "com.sustarchive.app.model.Submission[ submissionId=" + submissionId +"submissionComment="+commentTeacher+" submissionUrl="+submissionUrl+ " ]";
     }
     
 }
