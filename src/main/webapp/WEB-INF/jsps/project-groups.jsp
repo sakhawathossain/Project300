@@ -60,55 +60,23 @@
 	</nav>
 
 	<div class="container">
-		<div class="row">
-			<div class="col-xs-2">
-				<label>Session</label>
-			</div>
-			<div class="col-xs-2">
-				<label>Semester</label>
-			</div>
-			<div class="col-xs-6">
-				<label>Title</label>
-			</div>
-		</div>
 		<div class="row searchbar">
-			<div class="col-xs-2">
-				<select id="session" class="form-control">
-					<option>All</option>
-					<option>2011-12</option>
-					<option>2010-11</option>
-					<option>2009-10</option>
-					<option>2008-09</option>
-				</select>
-			</div>
-			<div class="col-xs-2">
-				<select id="semester" class="form-control">
-					<option>All</option>
-					<option>1/2</option>
-					<option>2/2</option>
-					<option>3/2</option>
-					<option>4/2</option>
-				</select>
-			</div>
-			<div class="col-xs-6">
-				<input name="searchtext" id="searchtext" type="text"
-					class="form-control" placeholder="Enter title of a project"
-					aria-controls="myTable"> </input>
-			</div>
-			<div class="col-xs-2">
-				<button id="button-search-table" class="btn btn-info col-xs-12"
-					data-task="search">
-					<i class="glyphicon glyphicon-search"></i> Search
-				</button>
-			</div>
+
 			<div class="clearfix"></div>
 		</div>
 		<div class="panel col-lg-6 col-sm-6">
-			<div class="rowAddButton">
+			<div class="row">
+			<div class="rowAddButton col-xs-7">
+				<input name="searchtext" id="searchtext" type="text"
+					class="form-control" placeholder="Search a project"
+					aria-controls="myTable"> </input>
+			</div>
+			<div class="col-xs-4 rowAddButton">
 				<button id="button_add_project"
-					class="btn btn-success col-xs-4 col-xs-offset-8">
+					class="btn btn-success">
 					<i class="glyphicon glyphicon-plus-sign"></i> Add Project
 				</button>
+			</div>
 			</div>
 			<table id="projectTable"
 				class="table table-striped table-bordered table-hover">
@@ -164,7 +132,8 @@
 		<!-- panel 1-->
 		<div class="panel col-lg-6 col-sm-6">
 			<div class="rowAddButton">
-				<button class="btn btn-success col-xs-4 col-xs-offset-8">
+				<button id="button_add_group"
+					class="btn btn-success col-xs-4 col-xs-offset-8">
 					<i class="glyphicon glyphicon-plus-sign"></i> Add Groups
 				</button>
 			</div>
@@ -288,8 +257,8 @@
 								Project</h4>
 						</div>
 						<div class="modal-body">
-						    <input id="edit_task_id" name="taskId" type="hidden"></input>
-							<input id="edit_project_id" name="projectId" type="hidden"></input>
+							<input id="edit_task_id" name="taskId" type="hidden"></input> <input
+								id="edit_project_id" name="projectId" type="hidden"></input>
 							<div class="row bottom-buffer">
 								<div class="col-md-4">
 									<label>Title</label>
@@ -338,19 +307,10 @@
 
 							<div class="row bottom-buffer">
 								<div class="col-md-4">
-									<label>Group ID</label>
-								</div>
-								<div class="col-md-8">
-									<label id="edit_group_id">?</label>
-								</div>
-							</div>
-
-							<div class="row bottom-buffer">
-								<div class="col-md-4">
 									<label>Student 1: </label>
 								</div>
 								<div class="col-md-8">
-									<input name="edit_group_members_1" id="edit_group_members_1"
+									<input name="groupMember1" id="edit_group_members_1"
 										type="text" class="form-control"></input>
 								</div>
 							</div>
@@ -359,7 +319,7 @@
 									<label>Student 2: </label>
 								</div>
 								<div class="col-md-8">
-									<input name="edit_group_members_2" id="edit_group_members_2"
+									<input name="groupMember2" id="edit_group_members_2"
 										type="text" class="form-control"></input>
 								</div>
 							</div>
@@ -368,7 +328,7 @@
 									<label>Student 3: </label>
 								</div>
 								<div class="col-md-8">
-									<input name="edit_group_members_3" id="edit_group_members_3"
+									<input name="groupMember3" id="edit_group_members_3"
 										type="text" class="form-control"></input>
 								</div>
 							</div>
@@ -377,7 +337,7 @@
 									<label>Student 4: </label>
 								</div>
 								<div class="col-md-8">
-									<input name="edit_group_members_4" id="edit_group_members_4"
+									<input name="groupMember4" id="edit_group_members_4"
 										type="text" class="form-control"></input>
 								</div>
 							</div>
@@ -386,7 +346,7 @@
 									<label>Student 5: </label>
 								</div>
 								<div class="col-md-8">
-									<input name="edit_group_members_5" id="edit_group_members_5"
+									<input name="groupMember5" id="edit_group_members_5"
 										type="text" class="form-control"></input>
 								</div>
 							</div>
@@ -395,7 +355,7 @@
 									<label>Student 6: </label>
 								</div>
 								<div class="col-md-8">
-									<input name="edit_group_members_6" id="edit_group_members_6"
+									<input name="groupMember6" id="edit_group_members_6"
 										type="text" class="form-control"></input>
 								</div>
 							</div>

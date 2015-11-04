@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.google.gson.Gson;
 import com.great.cms.bean.GroupBean;
+import com.great.cms.bean.GroupInputBean;
 import com.great.cms.db.entity.Groups;
 import com.great.cms.db.entity.Student;
 import com.great.cms.db.entity.Task;
@@ -40,6 +41,8 @@ public class GroupController {
 
 		//List<Groups> groupList = null;
 		List<GroupBean> groupList = null;
+		if( (Object) projectID == null)
+			projectID = 0;
 		
 		groupList = projectGroupService.findGroupsByProjectId(projectID);
 
@@ -99,13 +102,22 @@ public class GroupController {
 
 	}
 	
-	@RequestMapping(value="/addgroup",method=RequestMethod.POST)
-    public @ResponseBody String addGroup(int projectId ,String groupName,List<Student> studentList,int taskId )
+	@RequestMapping(value="/xaddgroup",method=RequestMethod.POST)
+    public @ResponseBody String xaddGroup(int projectId, String groupName, List<Student> studentList,int taskId )
     {
 		System.out.println("ProjectGroupController  -> addgroup");
 		
 		projectGroupService.addGroupOfProject(projectId, groupName, studentList, taskId);
 		
+		return "{ \"success\" : true }";
+    }
+	
+	@RequestMapping(value="/addgroup",method=RequestMethod.POST)
+    public @ResponseBody String addGroup(GroupInputBean groupInputBean,
+    		@RequestParam("project_id")int projectId)
+    {
+		System.out.println("ProjectGroupController  -> addgroup");		
+		projectGroupService.addGroup(groupInputBean, projectId);
 		return "{ \"success\" : true }";
     }
 	
@@ -120,7 +132,7 @@ public class GroupController {
     }
 	
 	@RequestMapping(value="/deletegroup",method=RequestMethod.POST)
-    public @ResponseBody String deleteGroup(int groupId  )
+    public @ResponseBody String deleteGroup(@RequestParam("group_id") int groupId  )
     {
 		System.out.println("GroupController  -> deletegroup");
 		

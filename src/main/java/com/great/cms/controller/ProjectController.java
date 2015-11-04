@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.great.cms.bean.ProjectBean;
 import com.great.cms.db.entity.Project;
 import com.great.cms.db.entity.Submission;
+import com.great.cms.service.ExamCommitteeService;
 import com.great.cms.service.TaskProjectService;
 
 @Controller
@@ -22,13 +23,15 @@ public class ProjectController {
 	
 	@Autowired
 	private TaskProjectService taskProjectService;
+	
 	private JSONArray jsonArray;
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method=RequestMethod.GET,value="/ajaxprojects")
 	public @ResponseBody String getProjectList(Model model,@RequestParam("task_id") int taskId)
+			//@RequestParam(required = false) String session,
+			//@RequestParam(required = false) String semester)
 	{
-		//System.out.println("Project Controller -> getProjectList");
 		//System.out.println("Task Id: "+taskId);
 		List<Project> projectList = null;
 		

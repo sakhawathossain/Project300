@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
 
 import org.hibernate.SessionFactory;
@@ -24,7 +25,7 @@ public class GenericDaoImpl<T extends DomainObject, ID extends Serializable> imp
 
     protected Class<T> type;
     
-    @PersistenceContext
+    @PersistenceContext(type=PersistenceContextType.EXTENDED)
     protected EntityManager em;
 
     public GenericDaoImpl(Class<T> type) {

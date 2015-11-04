@@ -7,6 +7,4 @@ import com.great.cms.db.entity.Project;
 public interface ProjectDao extends GenericDao<Project, Integer> {
 
 	List<Project> findAll();
-
-
 }
