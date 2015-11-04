@@ -44,13 +44,18 @@
 
     <div class="container">
         <div class="row searchbar">
-            <div class="col-xs-10">
+            <div class="col-xs-8">
                 <p class="table-headertext">Course: <span id="course_code">${course_code}</span></p>
             </div>
             <div class="col-xs-2">
+            	<select id="filter_session" class="form-control">
+				</select>
+            </div>
+            
+            <div class="col-xs-2">
                 <button id="button_add_task" class="btn btn-success col-xs-12">
                     <i class="glyphicon glyphicon-plus-sign"></i>
-                    Add
+                    Add Task
                 </button>
             </div>
         </div>
@@ -150,7 +155,11 @@
                             <h4 class="modal-title" id="modal_label">Edit Task</h4>
                         </div>
                         <div class="modal-body">
-
+                        	<input type="hidden" name="taskId" id="edit_task_id"></input>
+							<div class="row bottom-buffer">
+                                <div class="col-md-8"><label>Session</label></div>
+                                <div class="col-md-4"><select name="session" id="session" type="text" class="form-control"></select></div>
+                            </div>
                             <div class="row bottom-buffer">
                                 <div class="col-md-4"><label>Title</label></div>
                                 <div class="col-md-8"><input name="taskTitle" id="edit_task_title" type="text" class="form-control"></input></div>
@@ -162,17 +171,23 @@
                             </div>
                             
                             <div class="row bottom-buffer">
-                                <div class="col-md-4"><label>Deadline</label></div>
+                                <div class="col-md-4"><label>Final Submission Deadline</label></div>
                                 <div class="col-md-8"><textarea name="taskDeadline" id="edit_task_deadline" type="text" class="form-control"></textarea></div>
                             </div>                            
                             
                             <div class="row bottom-buffer">
-                                <div class="col-md-4"><label>Total Group Number </label></div>
-                                <div class="col-md-8"><textarea name="taskTotalGroupNo" id="edit_task_group_number" type="text" class="form-control"></textarea></div>
+                                <div class="col-md-4"><label>Maximum Allowed Groups</label></div>
+                                <div class="col-md-8"><select name="taskTotalGroupNo" id="edit_task_group_number" class="form-control">
+                                	<option selected="selected">1</option>
+                                	<option>2</option>
+                                	<option>3</option>
+                                	<option>4</option>
+                                	<option>5</option>
+                                	</select></div>
                             </div>
                             
                             <div class="row bottom-buffer">
-                                <div class="col-md-4"><label>Total Submission</label></div>
+                                <div class="col-md-4"><label>Maximum Allowed Submissions</label></div>
                                 <div class="col-md-8"><textarea name="taskTotalSubmissonNo" id="edit_task_total_submission" type="text" class="form-control"></textarea></div>
                             </div>
                             
@@ -183,9 +198,11 @@
                             
                             <div class="row bottom-buffer">
                                 <div class="col-md-4"><label>Type</label></div>
-                                <div class="col-md-8"><select name="taskTypeId" id="edit_task_type" class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
+                                <div class="col-md-8">
+                                <!-- Changed name from 'taskTypeId' to 'taskType' for switching from Entity to Bean -->
+                                <select name="taskType" id="edit_task_type" class="form-control">                                     
+                                        <option>Assignment</option>
+                                        <option selected="selected">Project</option>
                                     </select></div>
                             </div>                    
                             

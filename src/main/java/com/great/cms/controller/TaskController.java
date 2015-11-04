@@ -22,10 +22,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.great.cms.bean.TaskBean;
 import com.great.cms.db.entity.CourseTask;
 import com.great.cms.db.entity.Task;
 import com.great.cms.db.entity.TaskType;
 import com.great.cms.service.CourseTaskService;
+import com.great.cms.service.ExamCommitteeService;
 import com.great.cms.service.TaskService;
 import com.great.cms.service.TaskTypeService;
 
@@ -39,6 +41,8 @@ public class TaskController {
 	private TaskTypeService taskTypeService;
 	@Autowired
 	private CourseTaskService courseTaskService;
+	@Autowired
+	private ExamCommitteeService examCommitteeService;
 
 	JSONArray jsonArray;
 
@@ -63,7 +67,17 @@ public class TaskController {
 			 * if( t.getTaskTypeId().getTaskTypeId()==1) jObj.add("Project");
 			 * else jObj.add("Assignment");
 			 */
-			jObj.add(t.getTaskTypeId().getTaskTypeId());
+			//jObj.add(t.getTaskTypeId().getTaskTypeId());
+			switch(t.getTaskTypeId().getTaskTypeId()){
+			case 1:
+				jObj.add("Assignment");
+				break;
+			case 2:
+				jObj.add("Project");
+				break;
+			case 3:
+				jObj.add("Thesis");
+			}
 			jObj.add(t.getTaskDesc());
 			jObj.add(t.getTaskDeadline().toString());
 			jObj.add(String.valueOf(t.getIsOpen()));
@@ -89,33 +103,22 @@ public class TaskController {
 		return taskJson;
 
 	}
-
+	
 	@RequestMapping(value = "/edittask", method = RequestMethod.POST)
 	public @ResponseBody
-	String updateTask(Task task, BindingResult result,
-			@RequestParam("taskTypeId") int taskType,
-			@RequestParam("taskId") int taskId) {
-		
-		TaskType tt = new TaskType();
-		tt.setTaskTypeId(taskType);
-		task.setTaskId(taskId);
-		task.setTaskTypeId(tt);
-		taskService.updateTask(task);
+	String updateTask(TaskBean taskBean, BindingResult result) {
+		taskService.updateTask(taskBean);
 		return "{ \"success\" : true }";
 
 	}
-
+	
 	@RequestMapping(value = "/addtask", method = RequestMethod.POST)
 	public @ResponseBody
-	String addTask(Task task, BindingResult result,
-			@RequestParam("taskTypeId") int taskType,@RequestParam("course_id") int courseId) {
+	String addTask(TaskBean taskBean, BindingResult result, @RequestParam("course_id") int courseId) {
 		System.out.println("TaskController.java: Calling the addTask() method");
-		TaskType tt = new TaskType();
-		tt.setTaskTypeId(taskType);
-		task.setTaskTypeId(tt);
-		taskService.saveTask(task, courseId, 2011);
+		//taskBean.setSession(2011);
+		taskService.saveTask(taskBean, courseId);
 		return "{ \"success\" : true }";
-
 	}
 
 	@RequestMapping(value = "/deletetask", method = RequestMethod.POST)
@@ -125,6 +128,14 @@ public class TaskController {
 		taskService.deleteTaskById(id);
 		
 		return "{ \"success\" : true }";
+	}
+	
+	@RequestMapping(value = "/getsessions", method = RequestMethod.GET)
+	public @ResponseBody String getSessionList(){
+		String data =  examCommitteeService.getAllSession();
+		//System.out.println("Session data in controller: " + data);
+		return "{\"Result\":\"OK\",\"Options\":" + data + "}";
+		//return data;
 	}
 
 }

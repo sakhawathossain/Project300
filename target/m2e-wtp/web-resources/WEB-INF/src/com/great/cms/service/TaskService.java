@@ -2,15 +2,16 @@ package com.great.cms.service;
 
 import java.util.List;
 
+import com.great.cms.bean.TaskBean;
 import com.great.cms.db.entity.Task;
 
 public interface TaskService {
 	
 	List<Task>getTaskList();
 	
-	void saveTask(Task task,int courseId,int session);
-	
-	void updateTask(Task task);
+	void saveTask(TaskBean taskBean, int courseId);
+
+	void updateTask(TaskBean taskBean);
 	
 	void deleteTask(Task task);
 	

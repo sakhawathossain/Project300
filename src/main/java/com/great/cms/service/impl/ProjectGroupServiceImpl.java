@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.great.cms.bean.GroupBean;
+import com.great.cms.bean.GroupInputBean;
 import com.great.cms.db.dao.GroupsDao;
 import com.great.cms.db.dao.ProjectDao;
 import com.great.cms.db.dao.ProjectGroupDao;
@@ -16,9 +17,11 @@ import com.great.cms.db.dao.StudentDao;
 import com.great.cms.db.dao.StudentGroupDao;
 import com.great.cms.db.dao.TaskDao;
 import com.great.cms.db.entity.Groups;
+import com.great.cms.db.entity.Project;
 import com.great.cms.db.entity.ProjectGroup;
 import com.great.cms.db.entity.Student;
 import com.great.cms.db.entity.StudentGroup;
+import com.great.cms.db.entity.Task;
 import com.great.cms.service.ProjectGroupService;
 
 @Service("ProjectGroupService")
@@ -31,15 +34,17 @@ public class ProjectGroupServiceImpl implements ProjectGroupService,Serializable
 	@Autowired
 	private GroupsDao groupsDao;
 	@Autowired
+	private StudentDao studentDao;
+	@Autowired
 	private StudentGroupDao studentGroupDao;
 	@Autowired
 	private ProjectDao projectDao;
 	
 	public List<GroupBean> findGroupsByProjectId(int projectId) {
 		
-		
 		List<ProjectGroup> projectGroupList = projectGroupDao.findAll();
 		List<GroupBean> groupList = new ArrayList();
+		if(projectGroupList!=null)
 		for(ProjectGroup pg : projectGroupList)
 		{
 			// this if statement filters the groups
@@ -50,6 +55,7 @@ public class ProjectGroupServiceImpl implements ProjectGroupService,Serializable
 				
 					List<String> memberList = new ArrayList<>();
 					List <StudentGroup> members = studentGroupDao.findStudentByGroupId(gb.getGroupId());
+					//if( !members.isEmpty() )
 					for(StudentGroup sg : members)
 						memberList.add("" + sg.getStudentId().getRegistrationNo() );
 					
@@ -60,6 +66,7 @@ public class ProjectGroupServiceImpl implements ProjectGroupService,Serializable
 		return groupList;
 	}
 
+	// Discarded method:
 	@Override
 	public void addGroupOfProject(int projectId, String groupName,
 			List<Student> studentList,int taskId) {
@@ -83,6 +90,40 @@ public class ProjectGroupServiceImpl implements ProjectGroupService,Serializable
 		
 		projectGroupDao.save(projGrp);
 		
+	}
+	
+	@Override
+	public void addGroup(GroupInputBean groupInputBean, int projectId) {
+		Project project = this.projectDao.findById(projectId);
+		// Getting the first element of TaskProjectList because
+		// it is expected that there will always be only one element in the list.
+		// Each Project is mapped to One TaskProject only.
+		
+		// Save the Group entity
+		Task taskId = project.getTaskProjectList().get(0).getTaskId();
+		Groups group = new Groups();
+		group.setGroupName("Group Name");
+		group.setTaskId(taskId);
+		this.groupsDao.save(group);
+		
+		// Save the ProjectGroup entity
+		ProjectGroup projectGroup = new ProjectGroup();
+		projectGroup.setGroupId(group);
+		projectGroup.setProjectId(project);
+		this.projectGroupDao.save(projectGroup);
+		
+		// Save all StudentGroup entities for this Group
+		Student student;
+		for(int reg : groupInputBean.getMemberRegList()){
+			student = this.studentDao.getStudentByRegNo(reg);
+			if(student != null){
+				
+				StudentGroup studentGroup = new StudentGroup();
+				studentGroup.setStudentId(student);
+				studentGroup.setGroupId(projectGroup.getGroupId());
+				this.studentGroupDao.save(studentGroup);
+			}
+		}
 	}
 
 	@Override
@@ -113,6 +154,4 @@ public class ProjectGroupServiceImpl implements ProjectGroupService,Serializable
 		groupsDao.deleteById(groupId);
 		
 	}
-
-
 }
