@@ -135,6 +135,13 @@ $(document)
 					// Load Group data on Project row click
 					$('#projectTable tbody').on('click', 'tr', function() {
 						projectID = projectTable.cell(this, 0).data();
+						if(projectID === null | projectID === ""){
+							alert('whoops');
+							projectID = 0;
+							$("#button_add_group").prop("disabled", true);
+						}
+						else
+							$("#button_add_gorup").prop("disabled", false);
 						projectTable.$('tr.selected').removeClass('selected');
 						$(this).addClass('selected');
 						groupURL = "ajaxgroups" + "?project_id=" + projectID;
@@ -169,7 +176,7 @@ $(document)
 					$('#button_add_group').on(
 							'click',
 							function(e) {
-								tempGroupURL = addGroupURL;
+								tempGroupURL = addGroupURL + '?project_id=' + projectID;
 								$('#modal_group_label').html("Add Project");
 								for ( var i = 0; i < 6; i++) {
 										var temp = i+1;
@@ -210,7 +217,7 @@ $(document)
 								var rowIndex = groupTable
 										.cell($(this).parent()).index().row;
 								groupID = groupTable.cell(rowIndex, 0).data();
-								$("#edit_group_id").html(groupID);
+								$("#edit_group_id").val(groupID);
 								var members = groupTable.cell(rowIndex, 2)
 										.data();
 								for ( var i = 0; i < 6; i++) {
@@ -275,9 +282,7 @@ $(document)
 					$('#edit_group').submit(function(event) {
 						$.ajax({
 							type : 'post',
-							// the url should be projectURL + "?action=edit&"
-							// but that is not working :|
-							url : tempGroupURL + '?project_id=' + projectID,
+							url : tempGroupURL,
 							data : $('#edit_group').serialize(),
 							// dataType: 'json',
 							// expect back from the server

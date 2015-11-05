@@ -304,7 +304,7 @@
 							<h4 class="modal-title" id="modal_group_label">Edit Group</h4>
 						</div>
 						<div id="div_edit_group_fields" class="modal-body">
-
+							<input id="edit_group_id" name ="groupId" type = "hidden"></input>
 							<div class="row bottom-buffer">
 								<div class="col-md-4">
 									<label>Student 1: </label>

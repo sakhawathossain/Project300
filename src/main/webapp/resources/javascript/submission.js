@@ -7,11 +7,12 @@ var action = 'edit';
 var addSubmissionURL = "addsubmission";
 var editSubmissionURL = "editsubmission";
 var deleteSubmissionURL = "deletesubmission";
+var submissionTable;
 
 $(document)
 		.ready(
 				function() {
-					var submissionTable;
+					
 					$('[data-toggle="tooltip"]').tooltip();
 					submissionTable = $('#submissionTable')
 							.DataTable(
@@ -73,11 +74,17 @@ $(document)
 										submissionTable.cell(this, 1).data());
 								$("#view_submission_comment").html(
 										submissionTable.cell(this, 2).data());
+								if(submissionTable.cell(this, 3)
+														.data() === null)
+									$("#view_submission_download").hide()
+								else{
 								$("#view_submission_download").attr(
 										"href",
 										"downloadfile?filename="
 												+ submissionTable.cell(this, 3)
 														.data());
+								$("#view_submission_download").show()
+								}
 								$('#modalSubmissionInfo').modal('show');
 							});
 
@@ -111,6 +118,7 @@ $(document)
 								$("#edit_submission_comment").val(
 										submissionTable.cell(rowIndex, 2)
 												.data());
+								$("#edit_submission_file").val(null);
 								$('#modalSubmissionEdit').modal('show');
 							});
 
@@ -133,6 +141,7 @@ $(document)
 					// Submit Submission add/edit form
 					$('#edit_submission').submit(function(event) {
 						saveMedia();
+						//submissionTable.ajax.reload();
 						event.preventDefault();
 					});
 

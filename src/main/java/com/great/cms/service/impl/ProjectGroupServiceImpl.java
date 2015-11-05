@@ -3,6 +3,7 @@ package com.great.cms.service.impl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.hibernate.hql.classic.GroupByParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class ProjectGroupServiceImpl implements ProjectGroupService,Serializable
 				
 					List<String> memberList = new ArrayList<>();
 					List <StudentGroup> members = studentGroupDao.findStudentByGroupId(gb.getGroupId());
-					//if( !members.isEmpty() )
+					if( !members.isEmpty() )
 					for(StudentGroup sg : members)
 						memberList.add("" + sg.getStudentId().getRegistrationNo() );
 					
@@ -102,7 +103,14 @@ public class ProjectGroupServiceImpl implements ProjectGroupService,Serializable
 		// Save the Group entity
 		Task taskId = project.getTaskProjectList().get(0).getTaskId();
 		Groups group = new Groups();
-		group.setGroupName("Group Name");
+		
+		// set a random group name, since we're not taking group name as input and it must be unique
+		
+		Random random = new Random();
+	    StringBuilder sb = new StringBuilder();
+	    for(int i=0; i<7; i++)
+	    	sb.append( (char) (random.nextInt((122-65) + 1) + 65) );
+		group.setGroupName(sb.toString());
 		group.setTaskId(taskId);
 		this.groupsDao.save(group);
 		
@@ -142,9 +150,26 @@ public class ProjectGroupServiceImpl implements ProjectGroupService,Serializable
 			StudentGroup studentGroup =new StudentGroup();
 			studentGroup.setGroupId(group);
 			studentGroup.setStudentId(s);
-			studentGroupDao.save(studentGroup);
-			
-			
+			studentGroupDao.save(studentGroup);	
+		}		
+	}
+	
+	@Override
+	public void editGroup(GroupInputBean groupInputBean) {
+		// TODO Auto-generated method stub
+		Groups group = groupsDao.findById(groupInputBean.getGroupId());
+		List<StudentGroup> studentGroupList = studentGroupDao.findStudentByGroupId(groupInputBean.getGroupId());
+		for(StudentGroup sg:studentGroupList )
+			studentGroupDao.delete(sg);
+		for(int reg : groupInputBean.getMemberRegList()){
+			Student student = this.studentDao.getStudentByRegNo(reg);
+			if(student != null){
+				
+				StudentGroup studentGroup = new StudentGroup();
+				studentGroup.setStudentId(student);
+				studentGroup.setGroupId(group);
+				this.studentGroupDao.save(studentGroup);
+			}
 		}
 		
 	}
@@ -153,5 +178,5 @@ public class ProjectGroupServiceImpl implements ProjectGroupService,Serializable
 	public void deleteGroupOfProject(int groupId) {
 		groupsDao.deleteById(groupId);
 		
-	}
+	}	
 }

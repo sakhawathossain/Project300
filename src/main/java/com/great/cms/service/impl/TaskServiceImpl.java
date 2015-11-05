@@ -80,7 +80,7 @@ public class TaskServiceImpl implements TaskService,Serializable {
 		task.setTaskTotalSubmissonNo(taskBean.getTaskTotalSubmissonNo());
 		task.setIsOpen(taskBean.getIsOpen());
 		this.taskDao.update(task);
-		
+		System.out.println("TaskBean session: " + taskBean.getSession());
 		CourseTask courseTask = task.getCourseTask();
 		courseTask.setExamCommitteeId(this.examCommitteeDao.findBySession(taskBean.getSession()));
 		this.courseTaskDao.update(courseTask);

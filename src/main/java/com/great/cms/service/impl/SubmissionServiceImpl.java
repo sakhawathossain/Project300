@@ -47,7 +47,8 @@ public class SubmissionServiceImpl implements SubmissionService,Serializable{
 //		System.out.println("Submission Object Before Edit: "+submission.toString());
 		submission.setSubmissionTime(submissionBean.getSubmissionTime());
 		submission.setCommentTeacher(submissionBean.getCommentTeacher());
-		submission.setSubmissionUrl(null);
+		// Keeping the old file
+		//submission.setSubmissionUrl(null);
 		
 		
 		submissionDao.update(submission);

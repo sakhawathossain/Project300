@@ -58,21 +58,6 @@ public class GroupController {
 		if (groupList.size() == 0)
 			System.out
 					.println("GroupController  -> getGroupListbyProjectId : LIST IS EMPTY");
-
-		/*for (GroupBean grp : groupList) {
-			JSONArray jsonObj = new JSONArray();
-//			jsonObj.add(grp.getGroupId().toString());
-//			JSONArray memberArray = new JSONArray();
-//				memberArray.add("2011331004");
-//				memberArray.add("2011331035");
-//				memberArray.add("2011331069");
-//			jsonObj.add(memberArray);
-//			jsonObj.add("0");
-//			jsonObj.add("empty");
-
-			jsonArray.add(jsonObj);
-		}*/
-		
 		for(GroupBean grp : groupList){
 			JSONArray jsonObj = new JSONArray();
 			jsonObj.add(grp.getGroupId());
@@ -86,31 +71,14 @@ public class GroupController {
 		}
 
 		JSONObject parameters = new JSONObject();
-
 		parameters.put("draw", 1);
-
 		parameters.put("recordsTotal", 1);
-
 		parameters.put("recordsFiltered", 1);
-
 		parameters.put("data", jsonArray);
-
 		String groupJson = parameters.toJSONString();
-
 		System.out.print("Json Data:  " + groupJson);
 		return groupJson;
-
 	}
-	
-	@RequestMapping(value="/xaddgroup",method=RequestMethod.POST)
-    public @ResponseBody String xaddGroup(int projectId, String groupName, List<Student> studentList,int taskId )
-    {
-		System.out.println("ProjectGroupController  -> addgroup");
-		
-		projectGroupService.addGroupOfProject(projectId, groupName, studentList, taskId);
-		
-		return "{ \"success\" : true }";
-    }
 	
 	@RequestMapping(value="/addgroup",method=RequestMethod.POST)
     public @ResponseBody String addGroup(GroupInputBean groupInputBean,
@@ -121,13 +89,12 @@ public class GroupController {
 		return "{ \"success\" : true }";
     }
 	
-	@RequestMapping(value="/editgroup",method=RequestMethod.POST)
-    public @ResponseBody String editGroup(int groupId ,List<Student> studentList )
+	@RequestMapping(value="/updategroup",method=RequestMethod.POST)
+    public @ResponseBody String editGroup(GroupInputBean groupInputBean )
     {
-		System.out.println("GroupController  -> editgroup");
-		
-		projectGroupService.editGroupOfProject(groupId, studentList);
-		
+		System.out.println("GroupController  -> editgroup");	
+		//projectGroupService.editGroupOfProject(groupId, studentList);
+		projectGroupService.editGroup(groupInputBean);
 		return "{ \"success\" : true }";
     }
 	
